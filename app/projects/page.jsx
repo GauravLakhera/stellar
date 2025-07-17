@@ -660,7 +660,7 @@ export default function VerticalProjectScroll() {
                   PROJECTS
                 </Link>
                 <Link
-                  href="/projects"
+                  href="/about"
                   className="block text-gray-200 hover:text-gray-100 transition-colors duration-200"
                   onMouseEnter={() => setIsHoveringNav(true)}
                   onMouseLeave={() => setIsHoveringNav(false)}
