@@ -8,6 +8,7 @@ import Link from "next/link";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { originalProjects } from "@/public/data/projects";
 import { useRouter } from "next/navigation";
+import CircularText from "@/components/CircularText";
 
 // Constants
 const MOBILE_BREAKPOINT = 768;
@@ -466,6 +467,10 @@ export default function VerticalProjectScroll() {
       ref={containerRef}
       className={`relative mx-auto z-[90] w-[98%] p-6 h-full overflow-y-scroll transition-all duration-700 ease-out space-y-4 pb-10 scrollbar-hide`}
     >
+
+
+
+
       <div ref={contentRef} className="flex flex-col gap-6">
         {infiniteProjects.map((proj, i) => {
           const isPriority = i < 6; // First 6 images
@@ -674,14 +679,14 @@ export default function VerticalProjectScroll() {
 
               {/* Footer */}
               <div className="flex px-10 md:flex-row flex-col w-full justify-start md:justify-between items-start space-y-3 md:space-y-0 md:items-center absolute bottom-6 font-quicksand text-xs font-light md:px-3 z-10">
-                <p className="flex flex-col">
-                  224 W MONTGOMERY ST
-                  <span>VILLA RICA, GEORGIA 30180</span>
-                </p>
-                <p className="flex flex-col">
-                  steller@gmail.com
-                  <span>+91 xxxxxxxxx</span>
-                </p>
+               <p className="flex flex-col">
+                      stellar builtech, Kargi chowk
+                      <span>Dehradun , 248121</span>
+                    </p>
+                    <p className="flex flex-col">
+                      info@stellardesignlab.com
+                      <span>+91 7819001855</span>
+                    </p>
                 <div className="flex justify-center items-center space-x-3 text-lg">
                   <a
                     href="https://www.facebook.com/yourprofile"
@@ -721,6 +726,15 @@ export default function VerticalProjectScroll() {
 
   return (
     <div className="relative w-full h-screen bg-white">
+
+                <div className="absolute top-1/2 left-6 -translate-x-1/2 -translate-y-1/2 text-xs z-[999] ">
+            <CircularText
+              text="SCROLL*DOWN*SCROLL*DOWN*"
+              onHover="speedUp"
+              spinDuration={20}
+              className="custom-class"
+            />
+          </div>
       {renderCoordinateDisplay()}
 
       {/* Crosshair lines */}

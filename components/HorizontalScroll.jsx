@@ -9,7 +9,7 @@ import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { originalProjects } from "@/public/data/projects";
+import { originalProjects } from "@/public/data/homeProjects";
 import { TextHoverEffect } from "./ui/text-hover-effect";
 
 if (typeof window !== "undefined") {
@@ -214,7 +214,7 @@ function Slide({ slide, index, isMobile }) {
         </motion.h2>
 
         <motion.div
-          className="slide-meta font-mono absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center gap-2 flex-wrap will-change-transform"
+          className="slide-meta font-mono absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center gap-2 flex-wrap will-change-transform w-full"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -223,7 +223,7 @@ function Slide({ slide, index, isMobile }) {
             (item, i) => (
               <motion.span
                 key={i}
-                className="px-3 py-1 text-center rounded-full bg-white/10 backdrop-blur-sm text-sm"
+                className="px-2 py-1 text-center rounded-full bg-white/10 backdrop-blur-sm text-[10px]  md:text-sm"
                 variants={metaVariants}
                 custom={i}
               >
@@ -269,7 +269,29 @@ export default function HorizontalScroll() {
   const [showNav, setShowNav] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); // 3 seconds
 
+    return () => clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    const progressInterval = setInterval(() => {
+      setLoadingProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          setTimeout(() => setIsLoading(false), 500); // Small delay after reaching 100%
+          return 100;
+        }
+        return prev + 5; // Increase by 2% every interval
+      });
+    }, 60); // Update every 60ms (3000ms / 50 steps = 60ms)
+
+    return () => clearInterval(progressInterval);
+  }, []);
   const cursorSize = isHoveringNav ? "w-16 h-16" : "w-3 h-3";
 
   // Memoized calculations
@@ -355,20 +377,20 @@ export default function HorizontalScroll() {
 
   // Improved Lenis Scroll Initialization with slower mobile speeds
   useEffect(() => {
-    if (isNavigating) return;
+    if (isNavigating || isLoading) return;
 
     const lenis = new Lenis({
-      duration: isMobile ? 1.2 : 1.2, // Much slower on mobile
+      duration: isMobile ? 2 : 1.2, // Increase duration for smoother mobile
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
-      smoothTouch: isMobile,
-      touchMultiplier: isMobile ? 2 : 2, // Much lower sensitivity on mobile
+      smoothTouch: true, // Enable for all devices
+      touchMultiplier: isMobile ? 1.2 : 2, // Reduce sensitivity
       infinite: false,
       autoResize: true,
       syncTouch: true,
       gestureOrientationM: true,
       normalizeWheel: true,
-      wheelMultiplier: isMobile ? 1 : 1, // Slower wheel scrolling on mobile
+      wheelMultiplier: isMobile ? 0.8 : 1, // Slower wheel on mobile
     });
 
     lenisRef.current = lenis;
@@ -411,11 +433,11 @@ export default function HorizontalScroll() {
       document.removeEventListener("touchstart", preventDefault);
       document.removeEventListener("touchmove", preventDefault);
     };
-  }, [isNavigating, isMobile]);
+  }, [isNavigating, isMobile, isLoading]);
 
   // Horizontal scroll setup with integrated navigation visibility
   useEffect(() => {
-    if (isNavigating) return;
+    if (isNavigating || isLoading) return;
 
     mainGsapCtx.current = gsap.context(() => {
       const wrapper = wrapperRef.current;
@@ -440,40 +462,26 @@ export default function HorizontalScroll() {
 
       // Main horizontal scroll animation with slower mobile scrub
       if (isMobile) {
-        // Mobile: Much slower scrub and better snapping
         scrollTweenRef.current = gsap.to(wrapper, {
           x: () => -(vw * (slidesEls.length - 1)),
           ease: "none",
           scrollTrigger: {
             trigger: container,
             pin: true,
-            scrub: 0.5, // Much slower scrub for mobile
+            scrub: 1.2, // Increase scrub value for smoother movement
             id: "horizontalScroll",
-            end: () => `+=${vw * (slidesEls.length - 1)}`, // Longer scroll distance
+            end: () => `+=${vw * (slidesEls.length - 1) * 1.5}`, // Increase scroll distance
             snap: {
               snapTo: (progress) => {
                 const totalSlides = slidesEls.length;
                 const currentSlide = Math.round(progress * (totalSlides - 1));
                 return currentSlide / (totalSlides - 1);
               },
-              duration: 0.5, // Longer snap duration
-              ease: "power2.out",
-              delay: 0.1,
+              duration: 0.8, // Increase snap duration
+              ease: "power3.out", // Smoother easing
+              delay: 0.05, // Reduce delay
             },
-            onUpdate: (self) => {
-              const progress = self.progress;
-              const slideIndex = Math.round(progress * (slidesEls.length - 1));
-              const targetProgress = slideIndex / (slidesEls.length - 1);
-
-              // Enhanced snapping for mobile
-              if (Math.abs(progress - targetProgress) < 0.5) {
-                gsap.to(wrapper, {
-                  x: -(vw * slideIndex),
-                  duration: 1,
-                  ease: "power2.out",
-                });
-              }
-            },
+            // Remove the onUpdate function - it's causing jerky behavior
             invalidateOnRefresh: true,
           },
         });
@@ -528,7 +536,7 @@ export default function HorizontalScroll() {
         mainGsapCtx.current.revert();
       }
     };
-  }, [isMobile, isNavigating]);
+  }, [isMobile, isNavigating, isLoading]);
 
   // Example of using scrollTweenRef for programmatic control
   const goToSlide = useCallback(
@@ -597,7 +605,7 @@ export default function HorizontalScroll() {
     () => ({
       closed: {
         width: closedMenuWidth || "45vw",
-        height: "80px",
+        height: isMobile ? "70px" : "80px",
         bottom: "10rem",
         left: "50%",
         x: "-50%",
@@ -642,6 +650,55 @@ export default function HorizontalScroll() {
     []
   );
 
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-transparent z-[10000] flex items-center justify-center">
+        <motion.div
+          className="fixed inset-0 z-[10000] bg-transparent flex items-center justify-center"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+        >
+          <div className="text-center text-white">
+            <motion.div
+              className="w-16 h-16 border-2 border-white/20 border-t-white rounded-full mx-auto mb-4"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.p
+              className="font-quicksand text-sm tracking-wide"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              Loading Experience...
+            </motion.p>
+            <motion.div
+              className="w-32 h-1 bg-white/10 rounded-full mt-4 mx-auto overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <motion.div
+                className="h-full bg-white rounded-full"
+                animate={{ width: `${loadingProgress}%` }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              />
+            </motion.div>
+            <motion.p
+              className="font-mono text-xs mt-2 text-white/60"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              {Math.round(loadingProgress)}%
+            </motion.p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div ref={containerRef} className="relative z-10 overflow-hidden">
@@ -677,7 +734,7 @@ export default function HorizontalScroll() {
             }}
             ref={navRef}
           >
-            <div className="flex justify-between items-center px-4 py-3">
+            <div className="flex justify-between items-center px-4 md:py-3 py-1">
               <div>
                 <h1 className="text-xs md:text-sm font-quicksand font-light tracking-wide">
                   STELLER
@@ -810,12 +867,12 @@ export default function HorizontalScroll() {
                   {/* Footer contact info */}
                   <div className="flex px-4 md:px-10 flex-col md:flex-row w-full justify-start md:justify-between items-start space-y-3 md:space-y-0 md:items-center absolute bottom-6 font-quicksand text-xs font-light z-10">
                     <p className="flex flex-col">
-                      224 W MONTGOMERY ST
-                      <span>VILLA RICA, GEORGIA 30180</span>
+                      stellar builtech, Kargi chowk
+                      <span>Dehradun , 248121</span>
                     </p>
                     <p className="flex flex-col">
-                      steller@gmail.com
-                      <span>+91 xxxxxxxxx</span>
+                      info@stellardesignlab.com
+                      <span>+91 7819001855</span>
                     </p>
                     <div className="flex justify-center items-center space-x-3 text-lg">
                       <a
@@ -859,12 +916,12 @@ export default function HorizontalScroll() {
         ref={footerRef}
         className="h-[22rem] relative bg-[#211d1d] z-[102] mt-6 px-6 text-white/80"
       >
-        <div className="absolute inset-0 w-full">
+        <div className="absolute inset-0 w-full z-[9999]">
           <TextHoverEffect text="SDL" />
         </div>
-        <div className="flex flex-col gap-6 lg:flex-row justify-between items-center text-sm font-mono font-medium">
+        <div className="flex flex-col gap-6 lg:flex-row justify-between items-start pt-3 text-sm font-mono font-medium">
           <div className="md:w-3/12">
-            <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4 mt-4">
+            <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4">
               <button onClick={() => handleNavigation("/")}>HOMEPAGE</button>
               <button onClick={() => handleNavigation("/projects")}>
                 PROJECT
@@ -874,20 +931,20 @@ export default function HorizontalScroll() {
                 CONTACT
               </button>
             </div>
-            <p className="font-mono text-center lg:text-start text-sm mt-4">
-              We're a creative, collaborative, research based, social enterprise
-              architecture firm continuously making an effort to impact the
-              community.
+            <p className="font-mono  lg:text-start text-xs mt-4">
+              Rooted in a philosophy of lifestyle architecture, our work fuses
+              intuitive design with refined aesthetics to create environments
+              that nurture, inspire, and transform.
             </p>
           </div>
 
-          <div className="text-center">
-            <p>224 W MONTGOMERY ST</p>
-            <p>VILLA RICA, GEORGIA 30180</p>
+          <div className=" text-xs md:text-sm">
+            <p>stellar builtech, Kargi chowk</p>
+            <p>Dehradun , 248121</p>
           </div>
-          <div>
-            <p>+ 678 282 7974</p>
-            <p>HELLO@RADGA.COM</p>
+          <div className="text-start text-xs md:text-sm">
+            <p>+91 7819001855</p>
+            <p>info@stellardesignlab.com</p>
           </div>
           <div className="flex justify-center items-center space-x-3 text-lg">
             <a

@@ -53,7 +53,7 @@ export default function Navbar() {
   const containerVariants = {
     closed: {
       width: closedMenuWidth || "40vw",
-      height: "80px",
+      height: "70px",
       bottom: "7rem",
       left: "50%",
       x: "-50%",
@@ -110,8 +110,8 @@ export default function Navbar() {
       {showNav && (
         <motion.div
           className={`fixed z-[9999] ${
-            isOpen ? `bg-black/40` : `bg-black/20`
-          }   backdrop-blur-xl text-white flex flex-col`}
+            isOpen ? `bg-black/40 backdrop-blur` : `bg-black/40`
+          }  text-white flex flex-col`}
           initial={isOpen ? "closed" : "closed"} // Initial state is closed
           animate={isOpen ? "open" : "closed"} // Animate based on isOpen state
           variants={containerVariants}
@@ -125,7 +125,7 @@ export default function Navbar() {
             if (el) navRef.current = el;
           }}
         >
-          <div className="flex text-black justify-between items-center px-4 py-3">
+          <div className="flex text-white justify-between items-center px-4 py-2">
             <div>
               <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
                 STELLER
@@ -143,11 +143,11 @@ export default function Navbar() {
               className="group relative w-16 h-16 flex items-center justify-center cursor-pointer overflow-hidden transition-all duration-300 ease-in-out rounded-full hover:bg-white/10"
             >
               <div
-                className="absolute w-14 h-px bg-black transition-all duration-300 ease-in-out
+                className="absolute w-14 h-px bg-white transition-all duration-300 ease-in-out
                 group-hover:rotate-45 group-hover:w-14 group-hover:translate-y-0 -translate-y-2"
               ></div>
               <div
-                className="absolute w-14 h-px bg-black transition-all duration-300 ease-in-out
+                className="absolute w-14 h-px bg-white transition-all duration-300 ease-in-out
                 group-hover:-rotate-45 group-hover:w-14 group-hover:translate-y-0 translate-y-2"
               ></div>
             </button>
@@ -264,12 +264,12 @@ export default function Navbar() {
                   {/* Footer contact info and social links */}
                   <div className="flex px-10 md:flex-row flex-col w-full justify-start md:justify-between items-start space-y-3 md:space-y-0 md:items-center absolute bottom-6 font-quicksand text-xs font-light md:px-3 z-10">
                     <p className="flex flex-col">
-                      224 W MONTGOMERY ST
-                      <span>VILLA RICA, GEORGIA 30180</span>
+                     stellar builtech, Kargi chowk
+                      <span>Dehradun , 248121</span>
                     </p>
-                    <p className="flex flex-col">
-                      steller@gmail.com
-                      <span>+91 xxxxxxxxx</span>
+                     <p className="flex flex-col">
+                      info@stellardesignlab.com
+                      <span>+91 7819001855</span>
                     </p>
                     <div className="flex justify-center items-center space-x-3 text-lg">
                       <a

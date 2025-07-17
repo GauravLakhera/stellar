@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState,useRef } from "react";
-import Lenis from '@studio-freight/lenis';
+import React, { useEffect, useState, useRef } from "react";
+import Lenis from "@studio-freight/lenis";
 
 import { TextAnimate } from "@/components/magicui/text-animate";
 import CircularText from "../../components/CircularText";
@@ -11,7 +11,7 @@ import TeamSection from "../../components/TeamSection";
 import Gallery from "../../components/Gallery";
 
 const page = () => {
-    const lenisRef = useRef();
+  const lenisRef = useRef();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
   const [isHoveringNav, setIsHoveringNav] = useState(false);
@@ -21,18 +21,18 @@ const page = () => {
 
   const teamData = [
     {
-      name: "Aditi Rao",
-      position: "Principal Architect",
+      name: "Abhay Gandhi",
+      position: "Founder and Creative Director",
       description:
-        "Aditi Rao leads Stellar Design Lab with a passion for socially engaged architecture. She brings over fifteen years of experience in sustainable design, working on community-driven schools, low-income housing, and urban infill projects that strengthen neighborhoods without displacing residents. Aditi believes that well-crafted space should be a tool for social equity. Her work has been recognized by local preservation societies and international sustainability awards. At SDL she oversees all major projects, mentors junior designers, and directs in-house research on new bio-based building materials. She sits on the board of the National Trust for Historic Preservation and regularly lectures on the role of architecture in community resilience. Beyond the studio, Aditi volunteers with Habitat for Humanity and enjoys teaching free weekend drawing classes to underserved youth. In her free time you’ll find her exploring vernacular architecture across the American South or curled up with a good book on phenomenology of space.",
+        "Abhay Gandhi leads the vision at Stellar Design Lab with a philosophy rooted in lifestyle architecture — the belief that spaces should not only function, but elevate the human spirit. With over a decade of experience in high-end residential and wellness-driven design, Abhay’s work explores the intersection of culture, psychology, and spatial experience. He champions the idea of mental architecture, designing environments that foster emotional clarity, connection, and a sense of belonging. His projects span luxury retreats, cultural pavilions, and lifestyle-oriented residences that seamlessly integrate diverse global aesthetics into local contexts. At SDL, Abhay mentors the design team and drives concept innovation through research on spatial behavior, emotional wellness, and intercultural design. He regularly collaborates with artists, wellness experts, and cultural historians to push the boundaries of what architecture can offer. Outside the studio, he volunteers on urban design panels, advocates for public mental health through space-making, and speaks on design’s role in shaping modern rituals. In his spare time, you’ll find him sketching in cafés around the world or diving into ethnographic studies on architecture and identity.",
       image: "/images/team2.jpg",
     },
     {
-      name: "Karan Singh",
-      position: "Design Lead",
+      name: "Kabir Bhatia",
+      position: "Design Director",
       description:
-        "As SDL’s Design Lead, Karan Singh merges rigorous conceptual thinking with playful material experiments. With a background in parametric design and digital fabrication, he has spearheaded award-winning installations, pop-ups, and corporate interiors that blend craft and computation. Karan is especially known for his inventive use of cross-laminated timber and recycled metal components to create warm, tactile environments. He leads SDL’s in-house “lab days,” where the team tests novel assemblies in 1:1 mockups. His projects have appeared in Architect Magazine’s “Top 50 Designs” and have been exhibited at the Cooper Hewitt Smithsonian Design Museum. Outside work, Karan pursues landscape painting and mentors emerging architects through AIA’s mentorship program. He’s a voracious reader of design theory and moonlights as a DJ under the moniker DJ Parametric.",
-      image: "/images/team1.jpg",
+        "Kabir Bhatia brings vision to life at Stellar Design Lab, turning creative direction into built reality with clarity and purpose. A firm believer that simplicity is the ultimate luxury, Kabir is known for his intuitive ability to translate complex design ambitions into refined, elegant spaces. With a versatile portfolio spanning residential, commercial, and hospitality projects, his approach consistently blends function with quiet opulence. For Kabir, design is never just about lines on paper — it’s a tool for enhancing socioeconomic and emotional well-being. His work is rooted in the idea that thoughtfully designed spaces can elevate lifestyles, nurture mental clarity, and foster meaningful human experiences. At SDL, Kabir leads spatial planning and technical detailing, ensuring that every project meets the highest standards of craft and intent. His design language emphasizes restraint, material honesty, and spatial flow, always grounded in contextual relevance. Outside of project work, Kabir engages in material research and mentors young designers in the principles of mindful architecture. He thrives on problem-solving and continues to redefine what luxury means in today’s world — not excess, but essence.",
+      image: "/images/kabir_photo.jpg",
     },
   ];
   const awardsData = [
@@ -58,26 +58,26 @@ const page = () => {
       description: "Adaptive Reuse of Old Mill District",
     },
   ];
-useEffect(() => {
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-  });
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    });
 
-  lenisRef.current = lenis;
+    lenisRef.current = lenis;
 
-  function raf(time) {
-    lenis.raf(time);
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
     requestAnimationFrame(raf);
-  }
 
-  requestAnimationFrame(raf);
-
-  return () => {
-    lenis.destroy();
-  };
-}, []);
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
   useEffect(() => {
     const handleHover = (e) => {
       const tag = e.target.tagName.toLowerCase();
@@ -257,16 +257,16 @@ useEffect(() => {
           <TeamSection team={teamData} />
         </div>
         {/* Our Culture */}
-        <div className="relative px-6 py-10  h-screen ">
-          <div className="grid lg:grid-cols-4 grid-cols-1 gap-3 text-xs h-screen font-mono">
+        <div className="relative px-6 py-10 h-max">
+          <div className="grid lg:grid-cols-4 grid-cols-1 gap-3 text-xs font-mono">
             <div className="lg:sticky lg:top-[calc(80vh-5rem)] self-start">
-              {/* <button
+              <button
                 onClick={() => setShowGallery(true)}
                 className="flex  w-[20rem] font-bold py-1 justify-between"
               >
                 <span>SEE US</span>
                 <span>IN ACTION </span>
-              </button> */}
+              </button>
               {showGallery && <Gallery onClose={() => setShowGallery(false)} />}
               <img
                 src="/images/bg2.jpg"
@@ -280,37 +280,44 @@ useEffect(() => {
             <div>
               <h1>1.0</h1>
               <p>
-                As architects, our ultimate goal is to examine the needs of our
-                users and provide a creative design solution that serves as a
-                catalyst for positive living. Architects have the ability to
-                influence social environments through sculpting space, and by
-                examining those user needs and desires early on we are able to
-                cycle through many design opportunities that ultimately yields a
-                solution uniquely catered to each and every client.
+                As designers, our approach begins by understanding the rhythms,
+                rituals, and aspirations of our users. We believe architecture
+                is not just about buildings — it’s about shaping lifestyles. By
+                thoughtfully engaging with daily routines, cultural nuances, and
+                spatial behaviors, we design environments that support holistic
+                living. Our goal is to create spaces that resonate emotionally
+                and functionally, enhancing the well-being of individuals and
+                the communities they inhabit. Through this lens of lifestyle
+                architecture, each project becomes a tailored expression of
+                identity, harmony, and purpose.
               </p>
             </div>
             <div className="space-y-5">
               <h1>2.0</h1>
               <p>
-                There are many phases to the architectural design process
-                (Programming, Schematic Design, Design Development, Construction
-                Documents, Construction Administration, just to name a few!)
-                that are used to integrate variables such as urban context,
-                accessibility, social impact, health & safety, performance, and
-                artistry. All of which we examine to determine design drivers
-                for each project.
+                Our design process moves through multiple phases — from
+                intuitive concept development to detailed execution — and each
+                stage is rooted in a deep commitment to social and environmental
+                context. We consider factors such as cultural continuity,
+                climate responsiveness, wellness, and inclusivity, ensuring our
+                designs are both meaningful and adaptable. Whether we are
+                integrating local craft into contemporary forms or aligning
+                wellness programs with spatial planning, our aim is to respond
+                sensitively to both human and ecological needs, shaping spaces
+                that stand the test of time.
               </p>
               <h1>3.0</h1>
               <p>
-                A prime component to our process is through collaboration. This
-                is key to the best design solutions, and that collaboration
-                comes from our own internal team but also engagement of the
-                community and users. Each project presents a new collaborative
-                opportunity that requires research, exploration, and discovery.
-                It is this process that inevitably provides a refined design
-                solution that would not have been achievable if not for the team
-                involved. Constraints and problems are viewed as opportunities
-                for creative problem solving and can give life to new ideas.
+                Collaboration is at the heart of our practice. We believe the
+                most resonant ideas emerge when diverse voices are brought to
+                the table — from clients and consultants to artisans and users.
+                Every project becomes a shared journey of discovery, where
+                differences are not just welcomed but celebrated. This dynamic
+                exchange of perspectives enables us to co-create refined,
+                intuitive spaces that blend global sensibilities with local
+                narratives. Through collective imagination and grounded
+                dialogue, we deliver environments that inspire connection and
+                foster a deeper sense of belonging.
               </p>
               <p className="uppercase">
                 We strive to deliver creative solutions for clients that give
@@ -320,8 +327,8 @@ useEffect(() => {
           </div>
         </div>
         {/* Our Culture */}
-        <div className=" py-20 mt-10 md:t-5">
-          <h1 className="text-start lg:text-center text-3xl lg:text-5xl w-8/12 lg:mx-auto px-6 -tracking-wider font-gilroy uppercase">
+        <div className=" py-20 my-auto h-max">
+          <h1 className="text-start lg:text-center text-3xl lg:text-5xl md:w-8/12 lg:mx-auto px-6 -tracking-wider font-gilroy uppercase">
             We constantly search for innovative, strategic, and imaginative
             individuals to enhance our team
           </h1>
@@ -351,7 +358,7 @@ useEffect(() => {
             </div>
             <p className="font-gilroy mt-5 lg:mt-0 text-lg lg:w-4/12 -tracking-widest leading-tight uppercase font-bold">
               If you would like to work with us, but can’t find a suitable role,
-              please send your application to hello@radga.com
+              please send your application to info@stellardesignlab.com
             </p>
           </div>
         </div>
@@ -362,7 +369,7 @@ useEffect(() => {
           <div className="mb-8 lg:mb-0">
             <h1 className="text-xl md:text-2xl font-bold">Awards</h1>
           </div>
-          
+
           <div className="flex-1 lg:ml-12">
             {awardsData.map((award, index) => (
               <div
@@ -373,7 +380,9 @@ useEffect(() => {
                 <h1 className="min-w-[3rem]">{award.year}</h1>
                 <div className="flex-1">
                   <p className="font-semibold mb-1">{award.title}</p>
-                  <p className="text-gray-600 leading-relaxed">{award.description}</p>
+                  <p className="text-gray-600 leading-relaxed">
+                    {award.description}
+                  </p>
                 </div>
               </div>
             ))}

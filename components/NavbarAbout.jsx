@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
@@ -8,7 +8,25 @@ export default function NavbarAbout() {
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const toggleMenu = () => setIsOpen((o) => !o);
+    const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
+
+  const isTouch = useMemo(() => {
+    return (
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0)
+    );
+  }, []);
+
+    const handleResize = useCallback(() => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+  
+      setScreenSize({ width, height });
+
+      setIsMobile(width < 768);
+    }, []);
 
   // Detect mobile
   useEffect(() => {
@@ -19,6 +37,42 @@ export default function NavbarAbout() {
       return () => window.removeEventListener("resize", upd);
     }
   }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  }, []);
+
+  useEffect(() => {
+   
+
+    if (!isTouch) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
+
+    return () => {
+      if (!isTouch) {
+        window.removeEventListener("mousemove", handleMouseMove);
+      }
+    };
+  }, [, handleMouseMove, isTouch]);
+
+
+    useEffect(() => {
+      handleResize();
+  
+      window.addEventListener("resize", handleResize);
+  
+      if (!isTouch) {
+        window.addEventListener("mousemove", handleMouseMove);
+      }
+  
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        if (!isTouch) {
+          window.removeEventListener("mousemove", handleMouseMove);
+        }
+      };
+    }, [handleResize, handleMouseMove, isTouch]);
 
   // Detect scroll bottom
   useEffect(() => {
@@ -180,12 +234,12 @@ export default function NavbarAbout() {
               {/* Footer contact info and social links */}
               <div className="flex px-10 md:flex-row flex-col w-full justify-start md:justify-between items-start space-y-3 md:space-y-0 md:items-center absolute bottom-6 font-quicksand text-xs font-light md:px-3 z-10">
                 <p className="flex flex-col">
-                  224 W MONTGOMERY ST
-                  <span>VILLA RICA, GEORGIA 30180</span>
+                  stellar builtech, Kargi chowk
+                  <span>Dehradun , 248121</span>
                 </p>
                 <p className="flex flex-col">
-                  steller@gmail.com
-                  <span>+91 xxxxxxxxx</span>
+                  info@stellardesignlab.com
+                  <span>+91 7819001855</span>
                 </p>
                 <div className="flex justify-center items-center space-x-3 text-lg">
                   <a
@@ -228,41 +282,41 @@ export default function NavbarAbout() {
               animate="enter"
               exit="exit"
             >
-              <div className="h-[22rem] w-full  relative bg-[#211d1d]  z-[102] mt-6 px-6 text-white/80">
+              <div className="h-[22rem] w-full  relative bg-[#211d1d]  z-[102]  px-6 text-white/80">
                 <div className="absolute inset-0 w-full">
                   <TextHoverEffect text="SDL" />
                 </div>
 
-                <div className="flex flex-col gap-6 lg:flex-row justify-between items-center text-sm font-mono font-medium">
+                <div className="flex flex-col gap-6 lg:flex-row justify-between items-start text-sm pt-3 font-mono font-medium">
                   <div className="md:w-3/12">
-                    <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4 mt-4">
-                      <button onClick={() => handleNavigation("/")}>
+                    <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4 ">
+                      <Link href='/' >
                         HOMEPAGE
-                      </button>
-                      <button onClick={() => handleNavigation("/projects")}>
+                      </Link>
+                      <Link  href='/project' >
                         PROJECT
-                      </button>
-                      <button onClick={() => handleNavigation("/about")}>
+                      </Link>
+                      <Link  href='/about' >
                         ABOUT
-                      </button>
-                      <button onClick={() => handleNavigation("/contact")}>
+                      </Link>
+                      <Link  href='/contact' >
                         CONTACT
-                      </button>
+                      </Link>
                     </div>
-                    <p className="font-mono text-center lg:text-start text-sm mt-4">
-                      We're a creative, collaborative, research based, social
-                      enterprise architecture firm continuously making an effort
-                      to impact the community.
+                    <p className="font-mono text-start lg:text-start text-xs mt-4">
+                      Rooted in a philosophy of lifestyle architecture, our work
+                      fuses intuitive design with refined aesthetics to create
+                      environments that nurture, inspire, and transform.
                     </p>
                   </div>
 
-                  <div className="text-center">
-                    <p>224 W MONTGOMERY ST</p>
-                    <p>VILLA RICA, GEORGIA 30180</p>
+                  <div className=" text-xs">
+                    <p> stellar builtech, Kargi chowk</p>
+                    <p> Dehradun , 248121</p>
                   </div>
-                  <div>
-                    <p>+ 678 282 7974</p>
-                    <p>HELLO@RADGA.COM</p>
+                  <div className="text-xs">
+                    <p>+91 7819001855</p>
+                    <p>info@stellardesignlab.com</p>
                   </div>
                   <div className="flex justify-center items-center space-x-3 text-lg">
                     <a
@@ -292,6 +346,34 @@ export default function NavbarAbout() {
                     >
                       <FaWhatsapp />
                     </a>
+                  </div>
+                </div>
+                <div>
+                  <div className="absolute w-full bg-transparent bottom-2 right-0 z-[100] font-bold text-xs text-white">
+                    <div className="text-white/50 flex justify-end gap-4 md:px-4 md:py-1">
+                      <p>
+                        <span className="border text-[8px] px-1 md:py-1 md:px-[0.25rem] rounded-full">
+                          X
+                        </span>
+                        {mousePos.x}
+                      </p>
+                      <p>
+                        <span className="border text-[8px] px-1 md:py-1 md:px-[0.25rem] rounded-full">
+                          W
+                        </span>
+                        {screenSize.width}
+                      </p>
+                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-[101] text-center">
+                        {Math.floor(screenSize.width / 2)}
+                      </div>
+                      <div className="absolute bottom-0 left-14 transform -translate-x-1/2 z-[101] text-center">
+                        <button
+                          onClick={() => handleNavigation("/privacy-policy")}
+                        >
+                          Privacy policy
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 {/* <div>

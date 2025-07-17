@@ -447,7 +447,7 @@ export default function contactUs() {
 
       {renderCursor()}
 
-      <div className=" text-center  p-6 ">
+      <div className=" text-center  md:p-6 ">
         <div className="min-h-screen bg-blue-100/70 text-black px-6 md:px-16 py-20 font-mono tracking-wide">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 border-b border-white/10 pb-20">
             {/* LEFT - INTRO TEXT */}
