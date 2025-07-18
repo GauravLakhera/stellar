@@ -38,8 +38,6 @@ export const originalProjects = [
     ],
   },
 
-
-
   {
     slug: "From-Concept-to-Crumbs",
     title: "BAKEMASTER",
@@ -69,7 +67,7 @@ export const originalProjects = [
   },
   {
     slug: "Old-meets-luxury",
-    title: "goa lotulim",
+    title: "LUXE HOMESTAY",
     type: "Hospitality",
     progress: "Design Conceptualization Completed",
     location: "Goa",
@@ -135,15 +133,15 @@ export const originalProjects = [
     ],
   },
     {
-    slug: "elegant-apartment",
-    title: "nishant jain",
+    slug: "Bohemian-apartment-New-Delhi",
+    title: "Mr. Jain's Apartment",
     type: "Residential",
     progress: "Under Construction",
     location: "Delhi",
     year: 2025,
     scope: "Design",
     partners: [],
-    image: "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/v1752572462/powder_room_scene1_kahzhd.jpg",
+    image: "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/v1752572449/living_room_scene4_s20oys.jpg",
     description: [
       "This 4BHK apartment in Delhi was designed with a clear intent to balance modern aesthetics with earthy comfort. Each space in the home — from the living area to the bedrooms — carries a sense of openness and thoughtful material layering. We introduced natural textures through rattan, wood grains, linen upholstery, and cane shutters, tying everything together with a palette of warm neutrals and leafy greens. The living room features a custom L-shaped couch, wooden ceiling panelling, and a handmade chandelier that frames the space with character.",
       "The bedrooms carry individual personalities through curated details — handcrafted wall art, exposed wooden shelving, patterned tiles, and soft lighting accents. Bathrooms were designed with a mix of bold patterns and calm textures, combining glazed tiles with warm wood finishes and rattan lights for a handcrafted, resort- style touch. A compact yet functional servant quarter was also integrated, maintaining privacy and utility without compromising the apartment’s seamless flow.",

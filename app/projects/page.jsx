@@ -80,6 +80,18 @@ const getClosedMenuWidth = () => {
   return "40vw";
 };
 
+  const metaVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1 + 0.4,
+        duration: 0.6,
+        ease: "backOut",
+      },
+    }),
+  };
 const getProgressValue = (filter) => {
   switch (filter) {
     case "Completed":
@@ -428,21 +440,18 @@ export default function VerticalProjectScroll() {
               </div>
 
               <div className="font-quicksand absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center text-center flex-col md:flex-row text-white text-xs space-x-0 md:space-x-2 space-y-2 md:space-y-0 p-2 rounded-lg">
-                <p className={`${
-                  viewMode === 2 ? "text-[10px] md:text-xs" : "text-xs md:text-sm"
-                } bg-gray-700/20 backdrop-blur-md px-2 py-1 rounded-2xl`}>
-                  {proj.title}
-                </p>
-                <div className={`flex flex-col md:flex-row space-y-1 md:space-y-0 md:space-x-2 ${
-                  viewMode === 2 ? "hidden md:flex" : "flex"
-                }`}>
-                  <p className="bg-gray-700/20 backdrop-blur-md px-2 py-1 rounded-2xl text-xs">
-                    {proj.type}
-                  </p>
-                  <p className="bg-gray-700/20 backdrop-blur-md px-2 py-1 rounded-2xl text-xs">
-                    {proj.location}
-                  </p>
-                </div>
+              {[proj.title, proj.type, proj.progress, proj.location].map(
+                (item, i) => (
+                  <motion.span
+                    key={i}
+                    className="px-3 py-1 text-center font-medium font-mono rounded-full bg-black/30 backdrop-blur-sm text-[0.80rem]"
+                    variants={metaVariants}
+                    custom={i}
+                  >
+                    {item}
+                  </motion.span>
+                )
+              )}
               </div>
             </motion.div>
           );
@@ -467,7 +476,7 @@ export default function VerticalProjectScroll() {
           transition: { duration: 0.5 },
         }}
       >
-        <div className="flex justify-between items-center px-4 py-3">
+        <div className="flex justify-between items-center px-4 py-1">
           <div>
             <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
               STELLER
@@ -482,7 +491,7 @@ export default function VerticalProjectScroll() {
 
           <div className={`hidden ${
             isOpen ? "lg:hidden" : "lg:grid"
-          } grid-cols-2 md:grid-cols-3 gap-2 p-2 text-xs font-quicksand items-start font-semibold`}>
+          } grid-cols-2 md:grid-cols-3 gap-2 p-2 text-xs font-mono items-start font-semibold`}>
             {[...TYPE_FILTERS, ...PROGRESS_FILTERS].map((filter) => (
               <button
                 key={filter}
