@@ -232,7 +232,7 @@ const page = () => {
 
           <div className="absolute text-xs flex w-full justify-between left-0 p-6 -translate-y-1/2 top-1/2 ">
             <p>[ About</p>
-            <p> Steller ]</p>
+            <p> Stellar ]</p>
           </div>
 
           <div className="absolute bottom-6 text-xs left-6">

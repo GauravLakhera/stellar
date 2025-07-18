@@ -217,7 +217,7 @@ const ProjectDetailClient = ({ project, nextProject }) => {
           }
         `}</style>
 
-        <div className="flex flex-row flex-nowrap">
+        <div className="relative flex flex-row flex-nowrap">
           {/* Intro full-screen section */}
           <section
             className="w-screen h-screen bg-cover bg-center flex items-center justify-center text-white text-5xl font-bold shrink-0"
@@ -227,7 +227,7 @@ const ProjectDetailClient = ({ project, nextProject }) => {
             }}
           >
             <motion.div
-              className="font-bold text-white flex justify-center items-center gap-2 flex-wrap will-change-transform"
+              className=" absolute bottom-[30%] font-bold text-white flex justify-center items-center gap-2 flex-wrap will-change-transform"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.5 }}
@@ -236,7 +236,7 @@ const ProjectDetailClient = ({ project, nextProject }) => {
                 (item, i) => (
                   <motion.span
                     key={i}
-                    className="px-3 py-1 text-center rounded-full bg-white/10 backdrop-blur-sm text-sm"
+                    className="px-3 py-1 text-center font-medium font-mono rounded-full bg-black/30 backdrop-blur-sm text-[0.80rem]"
                     variants={metaVariants}
                     custom={i}
                   >

@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 import { AnimatePresence } from "framer-motion";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
-
+import { useNavigate } from "../hooks/useNavigate";
 const getClosedMenuWidth = () => {
   if (typeof window !== "undefined" && window.innerWidth < 768) {
     return "90vw";
@@ -18,10 +18,11 @@ export default function Navbar() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isOpen, setIsOpen] = useState(false);
 
+    const [isNavigating, setIsNavigating] = useState(false);
   const [isHoveringNav, setIsHoveringNav] = useState(false);
   const cursorSize = isHoveringNav ? "w-16 h-16" : "w-3 h-3";
   const navRef = useRef(null);
-
+  const { navigate } = useNavigate();
   const [showNav, setShowNav] = useState(true);
 
   // useEffect(() => {
@@ -105,6 +106,14 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
+  const handleNavigation = useCallback(
+    (href) => {
+      setIsNavigating(true);
+      navigate(href);
+    },
+    [navigate]
+  );
+
   return (
     <AnimatePresence>
       {showNav && (
@@ -128,10 +137,10 @@ export default function Navbar() {
           <div className="flex text-white justify-between items-center px-4 py-2">
             <div>
               <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
-                STELLER
+                STELLAR
               </h1>
               <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
-                DESIGN+
+                DESIGN
               </h1>
               <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
                 LAB
@@ -223,51 +232,47 @@ export default function Navbar() {
 
                   {/* Navigation Links */}
                   <nav className="text-xl md:text-5xl gap-[5rem] font-montserrat grid grid-cols-2 items-center md:gap-[15rem] font-bold z-10">
-                    <Link
-                      href="/"
+                    <button
+                      onClick={() => handleNavigation("/")}
                       className="block text-white hover:text-gray-100 transition-colors duration-200"
-                      onMouseEnter={() => setIsHoveringNav(true)}
-                      onMouseLeave={() => setIsHoveringNav(false)}
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
                     >
                       HOMEPAGE
-                    </Link>
-                    <Link
-                      href="/projects"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href = "/projects"; // hard reload
-                      }}
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/projects")}
                       className="block text-white hover:text-gray-100 transition-colors duration-200"
-                      onMouseEnter={() => setIsHoveringNav(true)}
-                      onMouseLeave={() => setIsHoveringNav(false)}
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
                     >
                       PROJECTS
-                    </Link>
-                    <Link
-                      href="/about"
-                      className="block text-white hover:text-gray-100 transition-colors duration-200"
-                      onMouseEnter={() => setIsHoveringNav(true)}
-                      onMouseLeave={() => setIsHoveringNav(false)}
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/about")}
+                      // className="block text-white hover:text-gray-100 transition-colors duration-200"
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
                     >
                       ABOUT US
-                    </Link>
-                    <Link
-                      href="/contact"
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/contact")}
                       className="block text-white hover:text-gray-100 transition-colors duration-200"
-                      onMouseEnter={() => setIsHoveringNav(true)}
-                      onMouseLeave={() => setIsHoveringNav(false)}
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
                     >
                       CONTACT
-                    </Link>
+                    </button>
                   </nav>
 
                   {/* Footer contact info and social links */}
                   <div className="flex px-10 md:flex-row flex-col w-full justify-start md:justify-between items-start space-y-3 md:space-y-0 md:items-center absolute bottom-6 font-quicksand text-xs font-light md:px-3 z-10">
                     <p className="flex flex-col">
-                     stellar builtech, Kargi chowk
+                      stellar builtech, Kargi chowk
                       <span>Dehradun , 248121</span>
                     </p>
-                     <p className="flex flex-col">
+                    <p className="flex flex-col">
                       info@stellardesignlab.com
                       <span>+91 7819001855</span>
                     </p>

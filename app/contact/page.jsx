@@ -502,23 +502,23 @@ export default function contactUs() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-xs text-black/60">
             {/* Address Block */}
             <div>
-              <p>224 W MONTGOMERY ST</p>
-              <p>VILLA RICA, GEORGIA 30180</p>
+              <p>Stellar builtech, Kargi chowk</p>
+              <p>Dehradun , 248121</p>
               <br />
-              <p>933 LEE STREET</p>
-              <p>ATLANTA, GEORGIA 30310</p>
-              <p className="italic text-black/50">Co-Working @ Plywood</p>
+              {/* <p>933 LEE STREET</p>
+              <p>ATLANTA, GEORGIA 30310</p> */}
+              {/* <p className="italic text-black/50">Co-Working @ Plywood</p> */}
             </div>
 
             {/* Contact Info */}
             <div>
-              <p>+ 678 282 7974</p>
-              <p>HELLO@Stallar.COM</p>
+              <p>+91 7819001855</p>
+              <p>info@stellardesignlab.com</p>
             </div>
 
             {/* Footer Branding */}
-            <div className="flex justify-between items-end">
-              <p>©2024 Stallar</p>
+            <div className="flex justify-between items-start">
+              <p>©2025 Stellar</p>
               <div className="flex space-x-4 text-xs">
                 <a href="#" className="hover:text-black">
                   IG

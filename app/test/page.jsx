@@ -2,86 +2,64 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 
-export default function GsapStep3() {
-  const cardRef = useRef(null);
-  const titleRef = useRef(null);
-  const transparentCardRef = useRef(null);
+export default function AnimateLetters() {
+  const textRef = useRef(null);
+  const overlayDiv = useRef(null);
+
+  const text = "Have Fun!";
 
   useEffect(() => {
-    const tl = gsap.timeline();
+    const letters = textRef.current.querySelectorAll("span");
 
-    tl.fromTo(
-      cardRef.current,
+    const t1 = gsap.timeline();
+
+    t1.fromTo(
+      letters,
       {
-        scale: 0.5,
+        x: -100,
         opacity: 0,
-
-        transformOrigin: "center center",
+        scale: 0.1,
+        rotate: 45,
       },
       {
-        scale: 1.4,
+        x: 0,
         opacity: 1,
-
-        duration: 1.2,
-        ease: "back.out(1.7)",
+        scale: 1,
+        rotate: 0,
+        duration: 1.5,
+        fontSize: "18rem",
+        ease: "back.inOut",
+        stagger: 0.05,
       }
-    )
-      .to(cardRef.current, {
-        rotate: 360,
-        duration: 1.2,
-        ease: "power2.inOut",
-      })
-      .to(
-        titleRef.current,
-        {
-          fontSize: "1.5rem", // ~text-4xl
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-        },
-        "-=0.5" // Overlap animation by 0.5s
-      )
-      .fromTo(
-        transparentCardRef.current,
-        {
-          x: 100,
-          opacity: 0,
-          width: 0,
-          height: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          width: 200,
-          height: 100,
-          duration: 1.5,
-          ease: "power2.out",
-        }
-      ).to(cardRef.current,{
-        
-      })
+    ).to(
+      overlayDiv.current,
+      {
+        opacity: 1,
+      },
+      "-=0.5"
+    );
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-      <div
-        ref={cardRef}
-        className="w-64 h-64 flex justify-center items-center flex-col rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg"
+    <div className="relative min-h-screen bg-black flex items-center justify-center">
+      <h1
+        ref={textRef}
+        className="text-6xl z-[10] text-white font-bold w-full text-center flex gap-1 font-gilroy"
       >
-        <h1
-          ref={titleRef}
-          className="opacity-0 text-white font-gilroy font-bold text-center"
-        >
-          Welcome Aboard
-        </h1>
-
-        <div
-          ref={transparentCardRef}
-          className=" opacity-0 text-black rounded-lg shadow-lg flex items-center justify-center font-bold mt-4"
-        >
-          Transparent Card
-        </div>
-      </div>
+        {Array.from(text).map((char, i) => (
+          <span
+            key={i}
+            className="inline-block opacity-0"
+            style={{ display: "inline-block" }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </h1>
+      <div
+        ref={overlayDiv}
+        className="absolute border inset-0 opacity-0 w-screen z-[50] h-screen bg-gradient-to-r from-black to-white/50"
+      ></div>
     </div>
   );
 }

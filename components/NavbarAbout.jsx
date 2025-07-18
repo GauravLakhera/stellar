@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+import { useNavigate } from "../hooks/useNavigate";
 export default function NavbarAbout() {
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -11,6 +12,8 @@ export default function NavbarAbout() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const toggleMenu = () => setIsOpen((o) => !o);
     const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
+        const [isNavigating, setIsNavigating] = useState(false);
+        const { navigate } = useNavigate();
 
   const isTouch = useMemo(() => {
     return (
@@ -85,6 +88,14 @@ export default function NavbarAbout() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+    const handleNavigation = useCallback(
+      (href) => {
+        setIsNavigating(true);
+        navigate(href);
+      },
+      [navigate]
+    );
 
   // Variants for all three states
   const rootVariants = {
@@ -200,36 +211,40 @@ export default function NavbarAbout() {
               </div>
 
               {/* Navigation Links */}
-              <nav className="text-xl md:text-5xl gap-[5rem] font-montserrat grid grid-cols-2 items-center md:gap-[15rem] font-bold z-10">
-                <Link
-                  href="/"
-                  className="block text-white hover:text-gray-100 transition-colors duration-200"
-                >
-                  HOMEPAGE
-                </Link>
-                <Link
-                  href="/projects"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.location.href = "/projects"; // hard reload
-                  }}
-                  className="block text-white hover:text-gray-100 transition-colors duration-200"
-                >
-                  PROJECTS
-                </Link>
-                <Link
-                  href="/about"
-                  className="block text-white hover:text-gray-100 transition-colors duration-200"
-                >
-                  ABOUT US
-                </Link>
-                <Link
-                  href="/contact"
-                  className="block text-white hover:text-gray-100 transition-colors duration-200"
-                >
-                  CONTACT
-                </Link>
-              </nav>
+                  <nav className="text-xl md:text-5xl gap-[5rem] font-montserrat grid grid-cols-2 items-center md:gap-[15rem] font-bold z-10">
+                    <button
+                      onClick={() => handleNavigation("/")}
+                      className="block text-white hover:text-gray-100 transition-colors duration-200"
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
+                    >
+                      HOMEPAGE
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/projects")}
+                      className="block text-white hover:text-gray-100 transition-colors duration-200"
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
+                    >
+                      PROJECTS
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/about")}
+                      // className="block text-white hover:text-gray-100 transition-colors duration-200"
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
+                    >
+                      ABOUT US
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/contact")}
+                      className="block text-white hover:text-gray-100 transition-colors duration-200"
+                      // onMouseEnter={() => setIsHoveringNav(true)}
+                      // onMouseLeave={() => setIsHoveringNav(false)}
+                    >
+                      CONTACT
+                    </button>
+                  </nav>
 
               {/* Footer contact info and social links */}
               <div className="flex px-10 md:flex-row flex-col w-full justify-start md:justify-between items-start space-y-3 md:space-y-0 md:items-center absolute bottom-6 font-quicksand text-xs font-light md:px-3 z-10">
@@ -283,7 +298,7 @@ export default function NavbarAbout() {
               exit="exit"
             >
               <div className="h-[22rem] w-full  relative bg-[#211d1d]  z-[102]  px-6 text-white/80">
-                <div className="absolute inset-0 w-full">
+                <div className="absolute inset-0 w-full pointer-events-none">
                   <TextHoverEffect text="SDL" />
                 </div>
 
@@ -414,10 +429,10 @@ export default function NavbarAbout() {
             >
               <div>
                 <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
-                  STELLER
+                  STELLAR
                 </h1>
                 <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
-                  DESIGN+
+                  DESIGN
                 </h1>
                 <h1 className="text-xs md:text-sm font-quicksand font-semibold tracking-wide">
                   LAB

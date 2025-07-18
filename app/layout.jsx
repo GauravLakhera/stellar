@@ -1,4 +1,5 @@
 import "./globals.css";
+import { TransitionProvider } from "../components/TransitionProvider";
 
 export const metadata = {
   title: "Stellar Designe Lab - Innovative Architecture & Design",
@@ -11,10 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="relative bg-[#b4aea7]">
-        {/* <MouseTracker /> */}
-
-        <main className="h-full w-full bg-[#b4aea7]">{children}</main>
+      <body className="relative bg-blue-100/70">
+        <TransitionProvider>
+          <main className="h-full w-full bg-blue-100/70">{children}</main>
+        </TransitionProvider>
       </body>
     </html>
   );

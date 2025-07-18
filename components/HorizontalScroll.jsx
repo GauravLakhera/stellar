@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { originalProjects } from "@/public/data/homeProjects";
 import { TextHoverEffect } from "./ui/text-hover-effect";
+import { useNavigate } from '../hooks/useNavigate';
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -186,7 +187,7 @@ function Slide({ slide, index, isMobile }) {
       //     handleNavigation(`/projects/${slide.slug}`);
       //   }
       // } : undefined}
-      className="lg:w-screen h-screen flex-shrink-0 relative overflow-hidden"
+      className="slide-container lg:w-screen h-screen flex-shrink-0 relative overflow-hidden"
       // style={{ touchAction: isMobile ? 'pan-x' : 'auto' }}
     >
       <Image
@@ -200,7 +201,7 @@ function Slide({ slide, index, isMobile }) {
         quality={85}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-100/10 via-blue-100/10 to-transparent" />
 
       <div className="relative z-10 h-full w-full px-6 py-8 lg:px-8 lg:py-8 text-white">
         <motion.h2
@@ -214,7 +215,7 @@ function Slide({ slide, index, isMobile }) {
         </motion.h2>
 
         <motion.div
-          className="slide-meta font-mono absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center gap-2 flex-wrap will-change-transform w-full"
+          className="slide-meta font-mono absolute top-1/2 left-1/2 -translate-x-1/2  flex justify-center items-center gap-2 flex-wrap will-change-transform w-full"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -223,7 +224,7 @@ function Slide({ slide, index, isMobile }) {
             (item, i) => (
               <motion.span
                 key={i}
-                className="px-2 py-1 text-center rounded-full bg-white/10 backdrop-blur-sm text-[10px]  md:text-sm"
+                className="px-3 py-1 text-center font-medium font-mono rounded-full bg-black/30 backdrop-blur-sm text-[0.80rem]"
                 variants={metaVariants}
                 custom={i}
               >
@@ -240,7 +241,7 @@ function Slide({ slide, index, isMobile }) {
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.span
-            className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-sm"
+            className="px-3 py-1 text-center font-medium font-mono rounded-full bg-black/30 backdrop-blur-sm text-[0.80rem]"
             variants={metaVariants}
           >
             [projects]
@@ -271,10 +272,15 @@ export default function HorizontalScroll() {
   const [isNavigating, setIsNavigating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
+
+const { navigate } = useNavigate();
+
+
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // 3 seconds
+    }, 2000); // 3 seconds
 
     return () => clearTimeout(timer);
   }, []);
@@ -286,7 +292,7 @@ export default function HorizontalScroll() {
           setTimeout(() => setIsLoading(false), 500); // Small delay after reaching 100%
           return 100;
         }
-        return prev + 5; // Increase by 2% every interval
+        return prev + 2; // Increase by 2% every interval
       });
     }, 60); // Update every 60ms (3000ms / 50 steps = 60ms)
 
@@ -322,20 +328,10 @@ export default function HorizontalScroll() {
   }, []);
 
   // Handle navigation with proper cleanup
-  const handleNavigation = useCallback(
-    (href) => {
-      setIsNavigating(true);
-
-      // First cleanup all animations
-      cleanupAnimations();
-
-      // Small delay to ensure cleanup is complete
-      setTimeout(() => {
-        router.push(href);
-      }, 100);
-    },
-    [cleanupAnimations, router]
-  );
+  const handleNavigation = useCallback((href) => {
+    setIsNavigating(true);
+    navigate(href);
+  }, [navigate]);
 
   // Optimized resize handler
   const handleResize = useCallback(() => {
@@ -414,7 +410,8 @@ export default function HorizontalScroll() {
       if (
         e.target.closest("button") ||
         e.target.closest("a") ||
-        e.target.closest('[role="button"]')
+        e.target.closest('[role="button"]')||
+         e.target.closest('.slide-container')
       ) {
         return;
       }
@@ -650,18 +647,17 @@ export default function HorizontalScroll() {
     []
   );
 
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-transparent z-[10000] flex items-center justify-center">
+  const Loading =()=>(
+      <div className={`${isLoading?`fixed`:`hidden`} inset-0 bg-blue-100 z-[10000] flex items-center justify-center`}>
         <motion.div
-          className="fixed inset-0 z-[10000] bg-transparent flex items-center justify-center"
+          className="fixed inset-0 z-[10000] bg-blue-100 flex items-center justify-center"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          <div className="text-center text-white">
+          <div className="text-center text-black">
             <motion.div
-              className="w-16 h-16 border-2 border-white/20 border-t-white rounded-full mx-auto mb-4"
+              className="w-16 h-16 border-2 border-white/20 border-t-black rounded-full mx-auto mb-4"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
@@ -680,13 +676,13 @@ export default function HorizontalScroll() {
               transition={{ delay: 0.5 }}
             >
               <motion.div
-                className="h-full bg-white rounded-full"
+                className="h-full bg-black rounded-full"
                 animate={{ width: `${loadingProgress}%` }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               />
             </motion.div>
             <motion.p
-              className="font-mono text-xs mt-2 text-white/60"
+              className="font-mono text-xs mt-2 text-black/60"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
@@ -696,12 +692,14 @@ export default function HorizontalScroll() {
           </div>
         </motion.div>
       </div>
-    );
-  }
+  )
+
+
 
   return (
     <>
       <div ref={containerRef} className="relative z-10 overflow-hidden">
+       { Loading()}
         <div ref={wrapperRef} className="flex">
           {originalProjects.slice(0, 5).map((slide, index) => (
             <Slide
@@ -737,10 +735,10 @@ export default function HorizontalScroll() {
             <div className="flex justify-between items-center px-4 md:py-3 py-1">
               <div>
                 <h1 className="text-xs md:text-sm font-quicksand font-light tracking-wide">
-                  STELLER
+                  STELLAR
                 </h1>
                 <h1 className="text-xs md:text-sm font-quicksand font-light tracking-wide">
-                  DESIGN+
+                  DESIGN
                 </h1>
                 <h1 className="text-xs md:text-sm font-quicksand font-light tracking-wide">
                   LAB
@@ -912,14 +910,15 @@ export default function HorizontalScroll() {
       </AnimatePresence>
 
       {/* Footer section */}
+      
       <div
         ref={footerRef}
-        className="h-[22rem] relative bg-[#211d1d] z-[102] mt-6 px-6 text-white/80"
+        className="h-[22rem]  relative bg-[#211d1d] z-[110] mt-6 px-6 text-white/80"
       >
-        <div className="absolute inset-0 w-full z-[9999]">
+        <div className="absolute inset-0  z-[1] pointer-events-none">
           <TextHoverEffect text="SDL" />
         </div>
-        <div className="flex flex-col gap-6 lg:flex-row justify-between items-start pt-3 text-sm font-mono font-medium">
+        <div className="flex z-[10] flex-col gap-6 lg:flex-row justify-between items-start pt-3 text-sm font-mono font-medium">
           <div className="md:w-3/12">
             <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4">
               <button onClick={() => handleNavigation("/")}>HOMEPAGE</button>
