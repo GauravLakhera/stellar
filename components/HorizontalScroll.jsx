@@ -996,10 +996,11 @@ export default function HorizontalScroll() {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-[101] text-center">
                 {Math.floor(screenSize.width / 2)}
               </div>
-              <div className="absolute bottom-0 left-14 transform  z-[101] text-center">
-                <p className="text-sm text-gray-500">
-                  &copy; 2025 Stellar. All rights reserved.
+              <div className="absolute  px-1 bottom-0 left-0 transform  z-[101] text-center">
+                <p className=" text-xs text-gray-500">
+                  &copy; 2025 Stellar.
                 </p>
+                <p className="text-xs text-gray-500"> All rights reserved.</p>
               </div>
             </div>
           </div>
