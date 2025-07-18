@@ -381,13 +381,11 @@ export default function NavbarAbout() {
                       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-[101] text-center">
                         {Math.floor(screenSize.width / 2)}
                       </div>
-                      <div className="absolute bottom-0 left-14 transform -translate-x-1/2 z-[101] text-center">
-                        <button
-                          onClick={() => handleNavigation("/privacy-policy")}
-                        >
-                          Privacy policy
-                        </button>
-                      </div>
+<div className="absolute bottom-0 left-0 transform  z-[101] text-center">
+  <p className="text-sm text-gray-500">
+    &copy; 2025 Stellar. All rights reserved.
+  </p>
+</div>
                     </div>
                   </div>
                 </div>

@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { originalProjects } from "@/public/data/homeProjects";
 import { TextHoverEffect } from "./ui/text-hover-effect";
-import { useNavigate } from '../hooks/useNavigate';
+import { useNavigate } from "../hooks/useNavigate";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -273,9 +273,7 @@ export default function HorizontalScroll() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
-const { navigate } = useNavigate();
-
-
+  const { navigate } = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -328,10 +326,13 @@ const { navigate } = useNavigate();
   }, []);
 
   // Handle navigation with proper cleanup
-  const handleNavigation = useCallback((href) => {
-    setIsNavigating(true);
-    navigate(href);
-  }, [navigate]);
+  const handleNavigation = useCallback(
+    (href) => {
+      setIsNavigating(true);
+      navigate(href);
+    },
+    [navigate]
+  );
 
   // Optimized resize handler
   const handleResize = useCallback(() => {
@@ -410,8 +411,8 @@ const { navigate } = useNavigate();
       if (
         e.target.closest("button") ||
         e.target.closest("a") ||
-        e.target.closest('[role="button"]')||
-         e.target.closest('.slide-container')
+        e.target.closest('[role="button"]') ||
+        e.target.closest(".slide-container")
       ) {
         return;
       }
@@ -647,59 +648,61 @@ const { navigate } = useNavigate();
     []
   );
 
-  const Loading =()=>(
-      <div className={`${isLoading?`fixed`:`hidden`} inset-0 bg-blue-100 z-[10000] flex items-center justify-center`}>
-        <motion.div
-          className="fixed inset-0 z-[10000] bg-blue-100 flex items-center justify-center"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        >
-          <div className="text-center text-black">
+  const Loading = () => (
+    <div
+      className={`${
+        isLoading ? `fixed` : `hidden`
+      } inset-0 bg-blue-100 z-[10000] flex items-center justify-center`}
+    >
+      <motion.div
+        className="fixed inset-0 z-[10000] bg-blue-100 flex items-center justify-center"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+      >
+        <div className="text-center text-black">
+          <motion.div
+            className="w-16 h-16 border-2 border-white/20 border-t-black rounded-full mx-auto mb-4"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.p
+            className="font-quicksand text-sm tracking-wide"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            Loading Experience...
+          </motion.p>
+          <motion.div
+            className="w-32 h-1 bg-white/10 rounded-full mt-4 mx-auto overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
             <motion.div
-              className="w-16 h-16 border-2 border-white/20 border-t-black rounded-full mx-auto mb-4"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="h-full bg-black rounded-full"
+              animate={{ width: `${loadingProgress}%` }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             />
-            <motion.p
-              className="font-quicksand text-sm tracking-wide"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              Loading Experience...
-            </motion.p>
-            <motion.div
-              className="w-32 h-1 bg-white/10 rounded-full mt-4 mx-auto overflow-hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <motion.div
-                className="h-full bg-black rounded-full"
-                animate={{ width: `${loadingProgress}%` }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              />
-            </motion.div>
-            <motion.p
-              className="font-mono text-xs mt-2 text-black/60"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-              {Math.round(loadingProgress)}%
-            </motion.p>
-          </div>
-        </motion.div>
-      </div>
-  )
-
-
+          </motion.div>
+          <motion.p
+            className="font-mono text-xs mt-2 text-black/60"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            {Math.round(loadingProgress)}%
+          </motion.p>
+        </div>
+      </motion.div>
+    </div>
+  );
 
   return (
     <>
       <div ref={containerRef} className="relative z-10 overflow-hidden">
-       { Loading()}
+        {Loading()}
         <div ref={wrapperRef} className="flex">
           {originalProjects.slice(0, 5).map((slide, index) => (
             <Slide
@@ -910,7 +913,7 @@ const { navigate } = useNavigate();
       </AnimatePresence>
 
       {/* Footer section */}
-      
+
       <div
         ref={footerRef}
         className="h-[22rem]  relative bg-[#211d1d] z-[110] mt-6 px-6 text-white/80"
@@ -993,10 +996,10 @@ const { navigate } = useNavigate();
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-[101] text-center">
                 {Math.floor(screenSize.width / 2)}
               </div>
-              <div className="absolute bottom-0 left-14 transform -translate-x-1/2 z-[101] text-center">
-                <button onClick={() => handleNavigation("/privacy-policy")}>
-                  Privacy policy
-                </button>
+              <div className="absolute bottom-0 left-14 transform  z-[101] text-center">
+                <p className="text-sm text-gray-500">
+                  &copy; 2025 Stellar. All rights reserved.
+                </p>
               </div>
             </div>
           </div>
