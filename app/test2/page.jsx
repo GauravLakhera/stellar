@@ -91,7 +91,8 @@ const ImprovedGSAPAnimation = () => {
         fontWeight: "bold",
         scale: 0.8,
         duration: 1,
-        x:"50%",
+     
+        y:'50%',
         ease: "power2.inOut",
       }, "<")
       
