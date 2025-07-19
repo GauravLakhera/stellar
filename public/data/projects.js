@@ -78,15 +78,16 @@ export const originalProjects = [
       "Off Road is a distinctive A-frame Airbnb cottage nestled on Mussoorie Road in Dehradun, designed to immerse guests in panoramic mountain views and immersive hillside living. Crafted using prefabricated construction techniques, the structure is built on a metal frame and finished with shingles and glass to bring together strength, transparency, and rustic elegance. A collaborative effort with fellow architect Ashima and materials partner Stella Build Tech, the project represents a seamless blend of vision and execution",
       "The space is designed as a cozy yet functional one-bedroom studio with a warm wooden interior. A handcrafted staircase leads to an attic-level secondary bedroom, which offers expansive views of the surrounding valley. The front balcony serves as a peaceful vantage point for sunrise mornings and starlit nights. With natural wood, glass facades, and minimal interiors, Off Road reflects thoughtful placement and spatial clarity‚Äîensuring views are never compromised. This project is not just a stay, but an architectural expression of hillside serenity and smart compact design.",
     ],
-    gallery: [
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919860/DSC08949_smh7z5.webp",
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919860/DSC09082_bv3r83.webp",
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919860/DSC09122_hxnyec.webp",
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919859/DSC09051_rhkwyx.webp",
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919860/DSC08940_tejqpp.webp",
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919859/DSC09097_psg8kl.webp",
-      "https://res.cloudinary.com/dmcgea4q8/image/upload/v1752919859/DSC09162_ncjhso.webp",
-    ],
+gallery: [
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC08949_smh7z5.webp",
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC09082_bv3r83.webp",
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC09122_hxnyec.webp",
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC09051_rhkwyx.webp",
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC08940_tejqpp.webp",
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC09097_psg8kl.webp",
+  "https://res.cloudinary.com/dmcgea4q8/image/upload/f_auto,q_auto,w_800/DSC09162_ncjhso.webp",
+],
+
   },
   {
     slug: "Tile-Showroom-Facade",
