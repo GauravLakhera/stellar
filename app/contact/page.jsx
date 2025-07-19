@@ -2,11 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
-import Lenis from "@studio-freight/lenis";
-import Link from "next/link";
-import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import { originalProjects } from "@/public/data/projects";
+import emailjs from "@emailjs/browser";
+
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/NavBar";
 
@@ -14,53 +11,6 @@ import Navbar from "@/components/NavBar";
 const MOBILE_BREAKPOINT = 768;
 const CURSOR_OFFSET_DEFAULT = 6;
 const CURSOR_OFFSET_HOVER = 40;
-
-const TYPE_FILTERS = ["Commercial", "Residential", "Social Impact"];
-const PROGRESS_FILTERS = ["Completed", "Active Build", "Design/Planning"];
-
-// Animation variants
-const containerVariants = {
-  closed: (closedMenuWidth) => ({
-    width: closedMenuWidth,
-    height: "100px",
-    bottom: "5rem",
-    left: "50%",
-    x: "-50%",
-    opacity: 1,
-    scale: 1,
-    borderRadius: "0.75rem",
-    pointerEvents: "auto",
-  }),
-  open: {
-    width: "100%",
-    height: "100%",
-    bottom: "0",
-    left: "0",
-    x: "0",
-    opacity: 1,
-    scale: 1,
-    borderRadius: "0",
-    pointerEvents: "auto",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 25,
-      duration: 0.7,
-    },
-  },
-};
-
-const contentVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.3,
-      duration: 0.9,
-    },
-  },
-};
 
 // Utility functions
 const getClosedMenuWidth = () => {
@@ -70,18 +20,6 @@ const getClosedMenuWidth = () => {
   return "40vw";
 };
 
-const getProgressValue = (filter) => {
-  switch (filter) {
-    case "Completed":
-      return "completed";
-    case "Active Build":
-    case "Design/Planning":
-      return "ongoing";
-    default:
-      return null;
-  }
-};
-
 // Main component
 export default function contactUs() {
   const router = useRouter();
@@ -89,57 +27,63 @@ export default function contactUs() {
   // State management - minimized state updates
   const [isLeaving, setIsLeaving] = useState(false);
   const [closedMenuWidth, setClosedMenuWidth] = useState(getClosedMenuWidth());
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [viewMode, setViewMode] = useState(1);
+
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
   const [isHoveringNav, setIsHoveringNav] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [selectedProgressFilters, setSelectedProgressFilters] = useState([]);
 
-  // Refs
-  const containerRef = useRef(null);
-  const progressBarRef = useRef(null);
-  const contentRef = useRef(null);
-  const lenisRef = useRef(null);
-  const rafRef = useRef(null);
-  const scrollAnimationRef = useRef(null);
+  // Form state
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    services: [],
+    spaceType: "",
+    timeline: "",
+    budget: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
   const lastScrollTime = useRef(0);
-  const currentScrollTop = useRef(0);
 
-  // Memoized values - optimized filtering
-  const originalProjectsCount = useMemo(() => originalProjects.length, []);
+  // Service options
+  const serviceOptions = [
+    "Architectural Design",
+    "Interior Design",
+    "Licensing / Sanctions",
+    "Turnkey Execution",
+    "Interior + Architecture",
+    "Interior + Turnkey",
+    "Architecture + Interior + Turnkey",
+  ];
 
-  const selectedProgressValues = useMemo(() => {
-    return [
-      ...new Set(selectedProgressFilters.map(getProgressValue).filter(Boolean)),
-    ];
-  }, [selectedProgressFilters]);
+  // Space type options
+  const spaceTypeOptions = [
+    "Studio / 1BHK (400–600 sq.ft.)",
+    "2BHK (700–1000 sq.ft.)",
+    "3BHK (1000–1500 sq.ft.)",
+    "Villa / Duplex (2000+ sq.ft.)",
+    "Commercial Space",
+    "Other",
+  ];
 
-  const filteredProjects = useMemo(() => {
-    return originalProjects.filter((project) => {
-      const typeMatch =
-        selectedTypes.length === 0 ||
-        selectedTypes.some((type) =>
-          project.type.toLowerCase().includes(type.toLowerCase())
-        );
-      const progressMatch =
-        selectedProgressValues.length === 0 ||
-        selectedProgressValues.includes(project.progress);
-      return typeMatch && progressMatch;
-    });
-  }, [selectedTypes, selectedProgressValues]);
+  // Timeline options
+  const timelineOptions = [
+    "Immediately",
+    "Within 1 month",
+    "1–3 months",
+    "3–6 months",
+    "Just exploring for now",
+  ];
 
-  // Create triple array for infinite scroll
-  const infiniteProjects = useMemo(() => {
-    const projects = [
-      ...filteredProjects,
-      ...filteredProjects,
-      ...filteredProjects,
-    ];
-    return projects;
-  }, [filteredProjects]);
+  // Initialize EmailJS
+  useEffect(() => {
+    // Replace with your actual EmailJS keys
+    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+  }, []);
 
   // Event handlers - optimized with throttling
   const handleMouseMove = useCallback((e) => {
@@ -159,43 +103,100 @@ export default function contactUs() {
 
   const handleMouseOver = useCallback((e) => {
     const tag = e.target.tagName.toLowerCase();
-    const isInteractiveElement = ["a", "button", "img"].includes(tag);
+    const isInteractiveElement = [
+      "a",
+      "button",
+      "img",
+      "input",
+      "select",
+      "textarea",
+    ].includes(tag);
     setIsHoveringNav(isInteractiveElement);
   }, []);
 
-  const handleProjectClick = useCallback(
-    (slug) => {
-      setIsLeaving(true);
-      setTimeout(() => {
-        router.push(`/projects/${slug}`);
-      }, 500);
-    },
-    [router]
-  );
+  // Form handlers
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
-  const handleTypeFilterToggle = useCallback((filter) => {
-    setSelectedTypes((prev) =>
-      prev.includes(filter)
-        ? prev.filter((t) => t !== filter)
-        : [...prev, filter]
-    );
-  }, []);
+  const handleServiceToggle = (service) => {
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.includes(service)
+        ? prev.services.filter((s) => s !== service)
+        : [...prev.services, service],
+    }));
+  };
 
-  const handleProgressFilterToggle = useCallback((filter) => {
-    setSelectedProgressFilters((prev) =>
-      prev.includes(filter)
-        ? prev.filter((f) => f !== filter)
-        : [...prev, filter]
-    );
-  }, []);
+  const validateForm = () => {
+    if (!formData.name.trim()) return "Name is required";
+    if (!formData.phone.trim()) return "Phone number is required";
+    if (!formData.email.trim()) return "Email is required";
+    if (formData.services.length === 0)
+      return "Please select at least one service";
+    if (!formData.spaceType) return "Please select a space type";
+    if (!formData.timeline) return "Please select a timeline";
 
-  const toggleMenu = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []);
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email))
+      return "Please enter a valid email address";
 
-  const handleViewModeChange = useCallback((mode) => {
-    setViewMode(mode);
-  }, []);
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const error = validateForm();
+    if (error) {
+      setSubmitError(error);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      // Prepare email template parameters
+      const templateParams = {
+        to_name: "Stellar Design Team",
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        services: formData.services.join(", "),
+        space_type: formData.spaceType,
+        timeline: formData.timeline,
+        budget: formData.budget || "Not specified",
+        message: `
+Name: ${formData.name}
+Phone: ${formData.phone}
+Email: ${formData.email}
+Services: ${formData.services.join(", ")}
+Space Type: ${formData.spaceType}
+Timeline: ${formData.timeline}
+Budget: ${formData.budget || "Not specified"}
+        `,
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        templateParams
+      );
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setSubmitError("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Effects
   useEffect(() => {
@@ -213,114 +214,6 @@ export default function contactUs() {
       window.removeEventListener("mouseout", handleMouseOver);
     };
   }, [handleResize, handleMouseMove, handleMouseOver]);
-
-  // Optimized scroll effect
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container || !infiniteProjects.length) return;
-
-    const singleSetHeight = container.scrollHeight / 3; // Height of one set of projects
-
-    // Initialize Lenis
-    const lenis = new Lenis({
-      wrapper: container,
-      content: contentRef.current,
-      smooth: true,
-      direction: "vertical",
-      gestureDirection: "vertical",
-      wheelMultiplier: 1,
-      touchMultiplier: 1,
-      smoothTouch: false,
-      normalizeWheel: true,
-    });
-
-    lenisRef.current = lenis;
-
-    // Set initial scroll position to middle set
-
-    // Optimized scroll handler
-    const handleScroll = () => {
-      const scrollTop = container.scrollTop;
-      currentScrollTop.current = scrollTop;
-
-      // Calculate and update progress bar immediately (not throttled)
-      const singleSetHeight = container.scrollHeight / 3;
-      const middleSetScrollTop = scrollTop - singleSetHeight;
-      const progress = Math.max(
-        0,
-        Math.min(100, (middleSetScrollTop / singleSetHeight) * 100)
-      );
-
-      if (progressBarRef.current) {
-        progressBarRef.current.style.transform = `scaleY(${progress / 100})`;
-      }
-      const now = performance.now();
-      if (now - lastScrollTime.current < 16) return; // 60fps throttle
-      lastScrollTime.current = now;
-
-      if (scrollAnimationRef.current) {
-        cancelAnimationFrame(scrollAnimationRef.current);
-      }
-
-      scrollAnimationRef.current = requestAnimationFrame(() => {
-        const scrollTop = container.scrollTop;
-        currentScrollTop.current = scrollTop;
-
-        // Infinite scroll logic - seamless looping
-        if (scrollTop <= singleSetHeight * 0.1) {
-          // Near top, jump to bottom of middle set
-          container.scrollTop =
-            singleSetHeight * 2 - (singleSetHeight * 0.1 - scrollTop);
-        } else if (scrollTop >= singleSetHeight * 2.9) {
-          // Near bottom, jump to top of middle set
-          container.scrollTop =
-            singleSetHeight + (scrollTop - singleSetHeight * 2.9);
-        }
-
-        // Calculate current slide (only from middle set)
-        const middleSetScrollTop = scrollTop - singleSetHeight;
-        const itemHeight = singleSetHeight / filteredProjects.length;
-        const slideIndex = Math.max(
-          0,
-          Math.floor(middleSetScrollTop / itemHeight)
-        );
-        const currentSlideIndex = slideIndex % filteredProjects.length;
-
-        setCurrentSlide(currentSlideIndex);
-
-        // Update progress bar
-        const progress = Math.max(
-          0,
-          Math.min(100, (Math.abs(middleSetScrollTop) / singleSetHeight) * 100)
-        );
-        if (progressBarRef.current) {
-          progressBarRef.current.style.transform = `scaleY(${progress / 100})`;
-        }
-      });
-    };
-
-    // RAF loop for Lenis
-    const raf = (time) => {
-      lenis.raf(time);
-      rafRef.current = requestAnimationFrame(raf);
-    };
-    rafRef.current = requestAnimationFrame(raf);
-
-    container.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
-      }
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-      if (scrollAnimationRef.current) {
-        cancelAnimationFrame(scrollAnimationRef.current);
-      }
-    };
-  }, [infiniteProjects.length, filteredProjects.length]);
 
   // Render methods
   const renderCoordinateDisplay = () => (
@@ -395,11 +288,11 @@ export default function contactUs() {
       </div>
 
       <div
-        className="pointer-events-none fixed z-[101] top-0 bottom-0 w-px bg-[#999692]/50"
+        className="pointer-events-none fixed z-[101] top-0 bottom-0 w-px bg-blue-50"
         style={{ left: `${mousePos.x}px` }}
       />
       <div
-        className="pointer-events-none fixed z-[101] left-0 right-0 h-px bg-[#999692]/50"
+        className="pointer-events-none fixed z-[101] left-0 right-0 h-px bg-blue-50"
         style={{ top: `${mousePos.y}px` }}
       />
     </>
@@ -468,33 +361,181 @@ export default function contactUs() {
                 ■ Contact Form
               </h4>
               <p className="italic text-black/70">
-                Tell us what you’re thinking
+                Tell us what you're thinking
               </p>
 
               <div className="border-t border-black/40 w-full" />
 
-              <label className="block italic text-black/70 mt-4">
-                What email address can we reach you at?
-                <input
-                  type="email"
-                  className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
-                  placeholder=""
-                />
-              </label>
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name */}
+                  <label className="block italic text-black/70">
+                    What's your name?
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) =>
+                        handleInputChange("name", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
+                      placeholder=""
+                      required
+                    />
+                  </label>
 
-              <div className="flex justify-between items-end mt-4">
-                <label className="block italic text-black/70 w-full">
-                  What name do you go by?
-                  <input
-                    type="text"
-                    className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
-                    placeholder=""
-                  />
-                </label>
-                <button className="ml-4 px-4 py-2 text-xs bg-black/10 hover:bg-black/20 transition-all">
-                  SEND MESSAGE
-                </button>
-              </div>
+                  {/* Phone */}
+                  <label className="block italic text-black/70">
+                    Where can we reach you? (Phone / WhatsApp preferred)
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        handleInputChange("phone", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
+                      placeholder=""
+                      required
+                    />
+                  </label>
+
+                  {/* Email */}
+                  <label className="block italic text-black/70">
+                    What email address works best for you?
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
+                      placeholder=""
+                      required
+                    />
+                  </label>
+
+                  {/* Services */}
+                  <div className="block italic text-black/70">
+                    What kind of service are you looking for?
+                    <div className="mt-2 space-y-2">
+                      {serviceOptions.map((service) => (
+                        <label
+                          key={service}
+                          className="flex items-center space-x-2 text-xs not-italic"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formData.services.includes(service)}
+                            onChange={() => handleServiceToggle(service)}
+                            className="form-checkbox h-3 w-3 text-black/80"
+                          />
+                          <span>{service}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Space Type */}
+                  <label className="block italic text-black/70">
+                    What space are we designing for?
+                    <select
+                      value={formData.spaceType}
+                      onChange={(e) =>
+                        handleInputChange("spaceType", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 text-black/80"
+                      required
+                    >
+                      <option value="">Select space type</option>
+                      {spaceTypeOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {/* Other space type input */}
+                  {formData.spaceType === "Other" && (
+                    <input
+                      type="text"
+                      placeholder="Please specify..."
+                      onChange={(e) =>
+                        handleInputChange("spaceType", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
+                    />
+                  )}
+
+                  {/* Timeline */}
+                  <label className="block italic text-black/70">
+                    When do you plan to start?
+                    <select
+                      value={formData.timeline}
+                      onChange={(e) =>
+                        handleInputChange("timeline", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 text-black/80"
+                      required
+                    >
+                      <option value="">Select timeline</option>
+                      {timelineOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {/* Budget */}
+                  <label className="block italic text-black/70">
+                    What's your budget range (optional)?
+                    <input
+                      type="text"
+                      value={formData.budget}
+                      onChange={(e) =>
+                        handleInputChange("budget", e.target.value)
+                      }
+                      className="w-full bg-transparent border-b border-black/40 focus:outline-none mt-1 placeholder:text-black/40"
+                      placeholder="e.g. ₹10–15 lakhs"
+                    />
+                  </label>
+
+                  {/* Error message */}
+                  {submitError && (
+                    <div className="text-red-600 text-xs italic">
+                      {submitError}
+                    </div>
+                  )}
+
+                  {/* Submit button */}
+                  <div className="flex justify-end mt-6">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="px-6 py-3 text-xs bg-black/10 hover:bg-black/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
+                    </button>
+                  </div>
+
+                  <div className="text-center text-xs italic text-black/60 mt-4">
+                    Let's create something timeless together.
+                  </div>
+                </form>
+              ) : (
+                /* Success message */
+                <div className="text-center py-12">
+                  <h4 className="text-lg font-bold text-black/80 mb-4">
+                    Message sent successfully!
+                  </h4>
+                  <p className="text-black/70 italic">
+                    Thank you for reaching out. We will get back to you soon.
+                  </p>
+                  <p className="text-xs text-black/60 mt-4 italic">
+                    Let's create something timeless together.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -505,9 +546,6 @@ export default function contactUs() {
               <p>Stellar builtech, Kargi chowk</p>
               <p>Dehradun , 248121</p>
               <br />
-              {/* <p>933 LEE STREET</p>
-              <p>ATLANTA, GEORGIA 30310</p> */}
-              {/* <p className="italic text-black/50">Co-Working @ Plywood</p> */}
             </div>
 
             {/* Contact Info */}

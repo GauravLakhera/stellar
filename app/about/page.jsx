@@ -25,7 +25,7 @@ const page = () => {
       position: "Founder and Creative Director",
       description:
         "Abhay Gandhi leads the vision at Stellar Design Lab with a philosophy rooted in lifestyle architecture — the belief that spaces should not only function, but elevate the human spirit. With over a decade of experience in high-end residential and wellness-driven design, Abhay’s work explores the intersection of culture, psychology, and spatial experience. He champions the idea of mental architecture, designing environments that foster emotional clarity, connection, and a sense of belonging. His projects span luxury retreats, cultural pavilions, and lifestyle-oriented residences that seamlessly integrate diverse global aesthetics into local contexts. At SDL, Abhay mentors the design team and drives concept innovation through research on spatial behavior, emotional wellness, and intercultural design. He regularly collaborates with artists, wellness experts, and cultural historians to push the boundaries of what architecture can offer. Outside the studio, he volunteers on urban design panels, advocates for public mental health through space-making, and speaks on design’s role in shaping modern rituals. In his spare time, you’ll find him sketching in cafés around the world or diving into ethnographic studies on architecture and identity.",
-      image: "/images/team2.jpg",
+      image: "/images/abhay_photo.jpg",
     },
     {
       name: "Kabir Bhatia",
@@ -328,9 +328,9 @@ const page = () => {
         </div>
         {/* Our Culture */}
         <div className=" py-20 my-auto h-max">
-          <h1 className="text-start lg:text-center text-3xl lg:text-5xl md:w-8/12 lg:mx-auto px-6 -tracking-wider font-gilroy uppercase">
-            We constantly search for innovative, strategic, and imaginative
-            individuals to enhance our team
+          <h1 className="text-start lg:text-center text-3xl lg:text-5xl md:w-9/12 lg:mx-auto px-6 -tracking-wider font-gilroy uppercase">
+           At Stellar Design Lab, we thrive on bold ideas, thoughtful strategy, and boundary-pushing creativity.
+If you’re someone who thinks differently and designs fearlessly, we’d love to connect.
           </h1>
           <div className="flex flex-col lg:flex-row justify-between text-xs p-6 font-mono font-light">
             <p className="font-semibold hidden lg:block">[ work with us ]</p>
@@ -356,7 +356,7 @@ const page = () => {
                 </svg>
               </div>
             </div>
-            <p className="font-gilroy mt-5 lg:mt-0 text-lg lg:w-4/12 -tracking-widest leading-tight uppercase font-bold">
+            <p className="font-gilroy mt-5 lg:mt-0 text-lg lg:w-4/12 -tracking-wider leading-tight uppercase font-bold">
               If you would like to work with us, but can’t find a suitable role,
               please send your application to info@stellardesignlab.com
             </p>

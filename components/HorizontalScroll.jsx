@@ -372,7 +372,7 @@ export default function HorizontalScroll() {
     };
   }, [handleResize, handleMouseMove, isTouch]);
 
-  // Improved Lenis Scroll Initialization with slower mobile speeds
+  //  Lenis Scroll Initialization 
   useEffect(() => {
     if (isNavigating || isLoading) return;
 
@@ -391,6 +391,8 @@ export default function HorizontalScroll() {
     });
 
     lenisRef.current = lenis;
+
+
 
     let rafId;
     const raf = (time) => {
