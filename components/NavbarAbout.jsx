@@ -303,7 +303,7 @@ export default function NavbarAbout() {
                   <div className="md:w-3/12">
                     <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4 ">
                       <Link href="/">HOMEPAGE</Link>
-                      <Link href="/project">PROJECT</Link>
+                      <Link href="/projects">PROJECT</Link>
                       <Link href="/about">ABOUT</Link>
                       <Link href="/contact">CONTACT</Link>
                     </div>
