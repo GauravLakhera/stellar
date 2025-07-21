@@ -8,7 +8,7 @@ export const originalProjects = [
     progress: "Completed",
     location: "Dehradun",
     year: 2023,
-    scope: "",
+    scope: "Design and Execution",
     partners: [],
     image:
       "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/Restorant_view19_rqyrz2.jpg",
@@ -75,7 +75,7 @@ export const originalProjects = [
     scope: "Design",
     partners: [],
     image:
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE7_lkvkhl.jpg",
+      "/images/luxe1.jpeg",
     description: [
       "Goa LUX is a 5,000-square-meter heritage homestay project located in Loutolim, South Goa, where Indo- Portuguese legacy meets refined luxury. At its heart lies a 300-year-old Portuguese villa, originally built over 400 sqm, now meticulously redesigned and expanded into a 1,200 sqm estate that honors its past while embracing contemporary comfort. The structure was sensitively reimagined into a boutique homestay featuring multiple public and semi-public spaces, including grand dining areas, sit-outs, and balconies, all designed with experiential hospitality in mind.",
       "The layout comprises large luxury rooms with walk-in closets and opulent bathrooms fitted with jacuzzis. True to its roots, the design retains original elements like arched windows, decorative columns, red-tiled sloping roofs, and stucco-finished fa√ßades. Every architectural decision‚Äîfrom the scalloped balustrades to the intricate balconies‚Äîdraws inspiration from Portuguese-era details and harmonizes with modern architectural sensibilities.",
@@ -83,16 +83,18 @@ export const originalProjects = [
       "Goa LUX isn‚Äôt just a homestay; it‚Äôs a design statement, an act of conservation, and a celebration of cultural immersion through space.",
     ],
     gallery: [
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE7_lkvkhl.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE6_z5tdvp.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE5_i8h2c1.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE4_s8myea.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE3_r5fesa.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE2_fqg2p4.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE1_dvzv9m.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/BACK_FACADE_SCENE3_cklj49.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/BACK_FACADE_SCENE2_q32xin.jpg",
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/BACK_FACADE_SCENE1_ijcu2g.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE7_lkvkhl.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE6_z5tdvp.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE5_i8h2c1.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE4_s8myea.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE3_r5fesa.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE2_fqg2p4.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/SCENE1_dvzv9m.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/BACK_FACADE_SCENE3_cklj49.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/BACK_FACADE_SCENE2_q32xin.jpg",
+      // "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/BACK_FACADE_SCENE1_ijcu2g.jpg",
+       "/images/luxe2.jpeg",
+        "/images/luxe3.jpeg"
     ],
   },
 

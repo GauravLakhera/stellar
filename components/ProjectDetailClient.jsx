@@ -259,16 +259,16 @@ const ProjectDetailClient = ({ project, nextProject }) => {
                   <div className="uppercase">
                     <p>Location</p>
                     <p>Status</p>
-                    <p>Cost</p>
+                  
                     <p>Year</p>
-                    <p>Partners</p>
+                    <p>Scope work</p>
                   </div>
                   <div>
                     <p>{project.location}</p>
                     <p>{project.progress}</p>
-                    <p>{project.cost}</p>
+                   
                     <p>{project.year}</p>
-                    <p>{project.partners}</p>
+                    <p>{project.scope}</p>
                   </div>
                 </div>
                 {project.description?.map((descText, index) => (
