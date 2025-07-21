@@ -830,7 +830,7 @@ export default function HorizontalScroll() {
                   {/* Navigation Links */}
                   <nav className="text-xl md:text-5xl gap-8 md:gap-[15rem] font-montserrat grid grid-cols-2 items-center font-bold z-10">
                     <button
-                      onClick={() => handleNavigation("/")}
+                      onClick={() =>setIsOpen(false)}
                       className="block text-gray-400 hover:text-gray-100 transition-colors duration-200 text-left"
                       onMouseEnter={() => !isMobile && setIsHoveringNav(true)}
                       onMouseLeave={() => !isMobile && setIsHoveringNav(false)}
@@ -926,7 +926,7 @@ export default function HorizontalScroll() {
         <div className="flex z-[10] flex-col gap-6 lg:flex-row justify-between items-start pt-3 text-sm font-mono font-medium">
           <div className="md:w-3/12">
             <div className="text-xs flex justify-center lg:justify-start items-center font-mono gap-4">
-              <button onClick={() => handleNavigation("/")}>HOMEPAGE</button>
+              <button>HOMEPAGE</button>
               <button onClick={() => handleNavigation("/projects")}>
                 PROJECT
               </button>

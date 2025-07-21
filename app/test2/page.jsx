@@ -92,22 +92,18 @@ const ImprovedGSAPAnimation = () => {
         scale: 0.8,
         duration: 1,
      
-        y:'50%',
+        y:'-100%',
+         x:'100%',
         ease: "power2.inOut",
       }, "<")
       
       // Phase 3: Slide in text from right
       .to(slideText, {
-        x: "0%",
+        x: "-20%",
         opacity: 1,
         duration: 1,
         ease: "power2.out",
       })
-      .to(slideText, {
-        x: () => window.innerWidth < 768 ? "-20%" : window.innerWidth < 1024 ? "-30%" : "-40%",
-        duration: 1,
-        ease: "power2.inOut",
-      });
 
     timelineRef.current = tl;
 

@@ -491,8 +491,8 @@ export default function VerticalProjectScroll() {
 
           <div className={`hidden ${
             isOpen ? "lg:hidden" : "lg:grid"
-          } grid-cols-2 md:grid-cols-3 gap-2 p-2 text-xs font-mono items-start font-semibold`}>
-            {[...TYPE_FILTERS, ...PROGRESS_FILTERS].map((filter) => (
+          } grid-cols-2 md:grid-cols-3 gap-2 p-2 text-sm font-mono items-start font-semibold`}>
+            {TYPE_FILTERS.map((filter) => (
               <button
                 key={filter}
                 onClick={() =>
@@ -501,8 +501,7 @@ export default function VerticalProjectScroll() {
                     : handleProgressFilterToggle(filter)
                 }
                 className={`px-2 py-1 rounded transition-colors duration-200 ${
-                  (TYPE_FILTERS.includes(filter) && selectedTypes.includes(filter)) ||
-                  (PROGRESS_FILTERS.includes(filter) && selectedProgressFilters.includes(filter))
+                  (TYPE_FILTERS.includes(filter) && selectedTypes.includes(filter))
                     ? "bg-white/20 text-white"
                     : "bg-transparent text-gray-100 hover:text-white hover:bg-white/10"
                 }`}
