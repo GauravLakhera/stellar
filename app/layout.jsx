@@ -2,7 +2,7 @@ import "./globals.css";
 import { TransitionProvider } from "../components/TransitionProvider";
 
 export const metadata = {
-  title: "Stellar Designe Lab - Innovative Architecture & Design",
+  title: "Stellar Design Lab - Innovative Architecture & Design",
   description:
     "STELLARDESIGNLAB offers innovative architectural design, interior design, and master planning services in Dehradun and beyond. Crafting visionary spaces for living and working.",
   keywords:

@@ -294,7 +294,7 @@ export default function NavbarAbout() {
               animate="enter"
               exit="exit"
             >
-              <div className="h-[22rem] w-full  relative bg-[#211d1d]  z-[102]  px-6 text-white/80">
+              <div className="h-max lg:h-[23rem] w-full  relative bg-[#211d1d]  z-[102]  px-6 text-white/80">
                 <div className="absolute inset-0 w-full pointer-events-none">
                   <TextHoverEffect text="SDL" />
                 </div>
@@ -312,6 +312,17 @@ export default function NavbarAbout() {
                       fuses intuitive design with refined aesthetics to create
                       environments that nurture, inspire, and transform.
                     </p>
+                    <div className=" pt-5 text-xs">
+                      <h1 className="text-sm">Services</h1>
+                      <ul className="list-disc px-5 mt-1 space-y-1">
+                        <li>Architecture Design</li>
+                        <li>Project Strategizing and Execution</li>
+                        <li>Interior Design and Execution</li>
+                        <li>Landscape Design</li>
+                        <li>PreFab Solutions</li>
+                        <li>Project Feasibility Report</li>
+                      </ul>
+                    </div>
                   </div>
 
                   <div className=" text-xs">
@@ -370,7 +381,7 @@ export default function NavbarAbout() {
                       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-[101] text-center">
                         {Math.floor(screenSize.width / 2)}
                       </div>
-                      <div className="absolute px-1 bottom-0 left-0 transform  z-[101] text-center">
+                      <div className="hidden lg:block absolute px-1 bottom-0 left-0 transform  z-[101] text-center">
                         <p className=" text-xs text-gray-500">
                           &copy; 2025 Stellar.
                         </p>

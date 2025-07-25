@@ -9,7 +9,7 @@ export const originalProjects = [
     scope: "Design and Execution",
     partners: [],
     image:
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/Restorant_view19_rqyrz2.jpg",
+      "/images/s.webp",
     description: [
       "Sosoru is a luxe Japandi-themed bar and restaurant that blends minimalist Japanese aesthetics with Scandinavian warmth. The space features a rich palette of natural wood, clean lines, and earthy textures. A signature highlight is the custom-designed bar counter that anchors the space, accompanied by a live kitchen that adds an interactive dimension to the dining experience. Multiple distinct seating zones‚Äîeach curated for ambiance and comfort‚Äîoffer varied experiences within the same envelope. The open layout frames scenic views and lies on the Old Mussoorie Road in Dehradun, enhancing the sensory journey.",
       " Designing Sosoru was a creatively fulfilling experience. Spread across approximately 7,000‚Äì10,000 square feet, the scale allowed for layered experimentation with textures, finishes, and spatial zoning. The project gave us the rare opportunity to play extensively with materials‚Äîespecially wood‚Äîboth structurally and aesthetically. Our team crafted custom carpentry and refined paint techniques inspired by traditional Japanese palettes. Open ceiling conduits added a subtle industrial edge, juxtaposed with warm elements for balance. From out-of-the-box detailing to thematic blending, every decision was made to preserve the spirit of Japandi while tailoring it to an elevated dining context in the hills.",
@@ -122,7 +122,7 @@ export const originalProjects = [
     scope: "Design and Execution",
     partners: [],
     image:
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/3_ujna6y.jpg",
+      "/images/2.webp",
     description: [
       "BakeMasters, located in Dehradun‚Äôs Racecourse area, is a premium bakery that underwent a complete design and identity transformation. This flagship store was reimagined inside-out to reflect both tradition and modern indulgence. The fa√ßade balances earthy red brick cladding with vertical black fins and backlit signage that lends a bold yet welcoming vibe to the storefront. A warm, inviting corner entry with marble textures and a neon glow sets the tone for what lies inside.",
       "The interiors are a blend of industrial charm and contemporary elegance. With exposed wooden ceiling beams, copper-toned chandeliers, and black-and-white striped flooring, the store radiates a rhythmic warmth. Display units were custom-designed for both visibility and function, with an emphasis on baked goods as the centerpiece. From biscuit baskets to cake counters, the layout ensures an intuitive and aesthetic browsing experience. This project wasn‚Äôt just a makeover‚Äîit was a brand revival designed to stand out and stay timeless.",
@@ -196,7 +196,7 @@ export const originalProjects = [
     scope: "Design and Execution",
     partners: [],
     image:
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/v1752571847/hospital_facade_render_4_d_i2eewu.jpg",
+      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_100,w_1200/v1752571847/hospital_facade_render_4_d_i2eewu.jpg",
     description: [
       "Galaxy Hospital is a full-scale healthcare design transformation project located at Kargi Chowk on Haridwar Road, Dehradun. What began as a basic grey structure was reimagined into a fully functioning, multi-specialty hospital that reflects both architectural clarity and healing warmth. Our role encompassed complete design and execution‚Äîfrom fa√ßade development to interiors of every critical zone within the facility",
       "The hospital fa√ßade was articulated using terracotta brick tiles and vertical glass bands, creating a rhythm of earthy materiality and transparency. The bold linear signage band integrates clean branding with contextual form. Internally, we designed everything from executive suites and OPD clinics to general wards and waiting lounges. Each space was curated to provide comfort, functionality, and spatial hygiene.",

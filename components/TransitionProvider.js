@@ -28,12 +28,12 @@ export const TransitionProvider = ({ children }) => {
     
     setTimeout(() => {
       setLoadingText('Almost there...');
-    }, 150);
+    }, 300);
 
     timeoutRef.current = setTimeout(() => {
       router.push(href);
-      setTimeout(() => setIsTransitioning(false), 400);
-    }, 300);
+      setTimeout(() => setIsTransitioning(false), 600);
+    }, 400);
   };
 
   useEffect(() => {

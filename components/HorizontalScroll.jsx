@@ -201,7 +201,7 @@ function Slide({ slide, index, isMobile }) {
         quality={85}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-100/10 via-blue-100/10 to-transparent" />
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-blue-100/10 via-blue-100/10 to-transparent" /> */}
 
       <div className="relative z-10 h-full w-full px-6 py-8 lg:px-8 lg:py-8 text-white">
         <motion.h2
@@ -372,7 +372,7 @@ export default function HorizontalScroll() {
     };
   }, [handleResize, handleMouseMove, isTouch]);
 
-  //  Lenis Scroll Initialization 
+  //  Lenis Scroll Initialization
   useEffect(() => {
     if (isNavigating || isLoading) return;
 
@@ -391,8 +391,6 @@ export default function HorizontalScroll() {
     });
 
     lenisRef.current = lenis;
-
-
 
     let rafId;
     const raf = (time) => {
@@ -830,7 +828,7 @@ export default function HorizontalScroll() {
                   {/* Navigation Links */}
                   <nav className="text-xl md:text-5xl gap-8 md:gap-[15rem] font-montserrat grid grid-cols-2 items-center font-bold z-10">
                     <button
-                      onClick={() =>setIsOpen(false)}
+                      onClick={() => setIsOpen(false)}
                       className="block text-gray-400 hover:text-gray-100 transition-colors duration-200 text-left"
                       onMouseEnter={() => !isMobile && setIsHoveringNav(true)}
                       onMouseLeave={() => !isMobile && setIsHoveringNav(false)}
@@ -918,7 +916,7 @@ export default function HorizontalScroll() {
 
       <div
         ref={footerRef}
-        className="h-[22rem]  relative bg-[#211d1d] z-[110] mt-6 px-6 text-white/80"
+        className="h-max lg:h-[23rem]  relative bg-[#211d1d] z-[110] mt-6 px-6 text-white/80"
       >
         <div className="absolute inset-0  z-[1] pointer-events-none">
           <TextHoverEffect text="SDL" />
@@ -940,6 +938,17 @@ export default function HorizontalScroll() {
               intuitive design with refined aesthetics to create environments
               that nurture, inspire, and transform.
             </p>
+            <div className=" pt-5 text-xs">
+              <h1 className="text-sm">Services</h1>
+              <ul className="list-disc px-5 mt-1 space-y-1">
+                <li>Architecture Design</li>
+                <li>Project Strategizing and Execution</li>
+                <li>Interior Design and Execution</li>
+                <li>Landscape Design</li>
+                <li>PreFab Solutions</li>
+                <li>Project Feasibility Report</li>
+              </ul>
+            </div>
           </div>
 
           <div className=" text-xs md:text-sm">
@@ -998,10 +1007,8 @@ export default function HorizontalScroll() {
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-[101] text-center">
                 {Math.floor(screenSize.width / 2)}
               </div>
-              <div className="absolute  px-1 bottom-0 left-0 transform  z-[101] text-center">
-                <p className=" text-xs text-gray-500">
-                  &copy; 2025 Stellar.
-                </p>
+              <div className=" hidden lg:block absolute  px-1 bottom-0 left-0 transform  z-[101] text-center">
+                <p className=" text-xs text-gray-500">&copy; 2025 Stellar.</p>
                 <p className="text-xs text-gray-500"> All rights reserved.</p>
               </div>
             </div>
