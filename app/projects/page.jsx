@@ -629,7 +629,7 @@ export default function VerticalProjectScroll() {
                     <FaInstagram />
                   </a>
                   <a
-                    href="https://wa.me/yourphonenumber"
+                    href="https://wa.me/+917819001855"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-green-500 transition-colors duration-200"

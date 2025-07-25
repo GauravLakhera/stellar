@@ -194,3 +194,30 @@
 }
 
 
+/* WhatsApp Float Animation */
+@keyframes whatsapp-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Custom pulse animation for better performance */
+.whatsapp-pulse {
+  animation: whatsapp-pulse 2s infinite;
+}
+
+/* Ensure the button stays above other elements */
+.whatsapp-float {
+  z-index: 999999;
+}
+
+/* Hide on very small screens if needed */
+@media (max-width: 320px) {
+  .whatsapp-float {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}

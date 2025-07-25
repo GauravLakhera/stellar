@@ -1,5 +1,6 @@
 import "./globals.css";
 import { TransitionProvider } from "../components/TransitionProvider";
+import WhatsAppFloat from "../components/WhatsAppFloat"
 
 export const metadata = {
   title: "Stellar Design Lab - Innovative Architecture & Design",
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
       <body className="relative bg-blue-100/70">
         <TransitionProvider>
           <main className="h-full w-full bg-blue-100/70">{children}</main>
+              <WhatsAppFloat />
         </TransitionProvider>
       </body>
     </html>
