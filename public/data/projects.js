@@ -7,7 +7,7 @@ export const originalProjects = [
     location: "Dehradun",
     year: 2023,
     scope: "Design and Execution",
-    partners: [],
+    partners: ["Sherap Dorjee (Designing)"],
     image:
       "/images/s.webp",
     description: [
@@ -40,6 +40,7 @@ export const originalProjects = [
     title: "ELISSE ROSSO",
     type: "Commercial",
     progress: "Completed",
+    theme:"Y2K",
     location: "Dehradun",
     year: 2022,
     scope: "Design",
@@ -120,7 +121,7 @@ export const originalProjects = [
     location: "Dehradun",
     year: 2023,
     scope: "Design and Execution",
-    partners: [],
+    partners: ["Namanraj and Navraj Jolly(founders of bakemasters)"],
     image:
       "/images/2.webp",
     description: [
@@ -194,7 +195,7 @@ export const originalProjects = [
     location: "Dehradun",
     year: 2024,
     scope: "Design and Execution",
-    partners: [],
+    partners: ["ayushman kuriyal, Dr. Sumita Prabhakar and Dr. Mahesh Kuriyal"],
     image:
       "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_100,w_1200/v1752571847/hospital_facade_render_4_d_i2eewu.jpg",
     description: [
@@ -320,7 +321,7 @@ export const originalProjects = [
     scope: "Design",
     partners: [],
     image:
-      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_auto,w_1200/v1752572698/PURUKUL_COTT_eemg2a.jpg",
+      "https://res.cloudinary.com/dqbdfh2ja/image/upload/f_auto,q_100,w_1200/v1752572698/PURUKUL_COTT_eemg2a.jpg",
     description: [
       "Purkul Farmhouse, Dehradun",
       "Nestled in the lush green hills of Purkul, Dehradun, this luxury farmhouse is envisioned as a tranquil retreat — a “home away from home.” The design reflects a harmonious blend of classic timber architecture and modern detailing. Elevated on a stone plinth, the structure features a wrap-around wooden deck, adorned with handcrafted railings and ambient pendant lighting, that invites one to soak in panoramic views of the natural surroundings.",

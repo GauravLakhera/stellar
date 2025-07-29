@@ -28,7 +28,7 @@ const ProjectDetailClient = ({ project, nextProject }) => {
   const [imageSizes, setImageSizes] = useState([]);
   const [isEntering, setIsEntering] = useState(true);
   const [scrollX, setScrollX] = useState(0);
-  
+
   const router = useRouter();
 
   useEffect(() => {
@@ -124,8 +124,8 @@ const ProjectDetailClient = ({ project, nextProject }) => {
     const lenis = new Lenis({
       wrapper: scrollContainer,
       content: scrollContainer.firstElementChild,
-      orientation: 'horizontal',
-      gestureOrientation: 'both',
+      orientation: "horizontal",
+      gestureOrientation: "both",
       smoothWheel: true,
       smoothTouch: true,
       touchMultiplier: 2,
@@ -139,7 +139,7 @@ const ProjectDetailClient = ({ project, nextProject }) => {
     lenisRef.current = lenis;
 
     // Listen to scroll events
-    lenis.on('scroll', (e) => {
+    lenis.on("scroll", (e) => {
       setScrollX(e.scroll);
     });
 
@@ -162,35 +162,38 @@ const ProjectDetailClient = ({ project, nextProject }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!lenisRef.current) return;
-      
+
       const scrollAmount = window.innerWidth * 0.8;
-      
+
       switch (e.key) {
-        case 'ArrowLeft':
+        case "ArrowLeft":
           e.preventDefault();
           lenisRef.current.scrollTo(lenisRef.current.scroll - scrollAmount);
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           e.preventDefault();
           lenisRef.current.scrollTo(lenisRef.current.scroll + scrollAmount);
           break;
-        case 'Home':
+        case "Home":
           e.preventDefault();
           lenisRef.current.scrollTo(0);
           break;
-        case 'End':
+        case "End":
           e.preventDefault();
           lenisRef.current.scrollTo(lenisRef.current.limit);
           break;
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen overflow-hidden">
+    <div
+      ref={containerRef}
+      className="relative w-full h-screen overflow-hidden"
+    >
       {isEntering && (
         <motion.div
           className="fixed inset-0 z-[999] bg-[#211d1d]"
@@ -201,13 +204,13 @@ const ProjectDetailClient = ({ project, nextProject }) => {
         />
       )}
 
-      <div 
+      <div
         ref={scrollContainerRef}
         className="horizontal-scroll-container w-full h-full overflow-x-auto overflow-y-hidden"
-        style={{ 
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          WebkitOverflowScrolling: 'touch'
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch",
         }}
       >
         {/* Hide scrollbar */}
@@ -223,7 +226,7 @@ const ProjectDetailClient = ({ project, nextProject }) => {
             className="w-screen h-screen bg-cover bg-center flex items-center justify-center text-white text-5xl font-bold shrink-0"
             style={{
               backgroundImage: `url(${project.image})`,
-              backgroundAttachment: 'fixed',
+              backgroundAttachment: "fixed",
             }}
           >
             <motion.div
@@ -232,25 +235,28 @@ const ProjectDetailClient = ({ project, nextProject }) => {
               whileInView="visible"
               viewport={{ once: true, amount: 0.5 }}
             >
-              {[project.title, project.type, project.progress, project.location].map(
-                (item, i) => (
-                  <motion.span
-                    key={i}
-                    className="px-3 py-1 text-center font-medium font-mono rounded-full bg-black/30 backdrop-blur-sm text-[0.80rem]"
-                    variants={metaVariants}
-                    custom={i}
-                  >
-                    {item}
-                  </motion.span>
-                )
-              )}
+              {[
+                project.title,
+                project.type,
+                project.progress,
+                project.location,
+              ].map((item, i) => (
+                <motion.span
+                  key={i}
+                  className="px-3 py-1 text-center font-medium font-mono rounded-full bg-black/30 backdrop-blur-sm text-[0.80rem]"
+                  variants={metaVariants}
+                  custom={i}
+                >
+                  {item}
+                </motion.span>
+              ))}
             </motion.div>
           </section>
 
           {/* Details section */}
           <section
             className="w-max h-screen text-black flex-shrink-0 z-[50] flex text-4xl font-bold"
-            style={{ backgroundColor: 'white' }}
+            style={{ backgroundColor: "white" }}
           >
             <div className="flex w-full">
               {/* Project details */}
@@ -259,16 +265,23 @@ const ProjectDetailClient = ({ project, nextProject }) => {
                   <div className="uppercase">
                     <p>Location</p>
                     <p>Status</p>
-                  
+
                     <p>Year</p>
                     <p>Scope work</p>
+                    {project?.theme && <p>Theme</p>}
+
+                    {project.partners.length > 0 && <p>Collaboration</p>}
                   </div>
                   <div>
                     <p>{project.location}</p>
                     <p>{project.progress}</p>
-                   
+
                     <p>{project.year}</p>
                     <p>{project.scope}</p>
+                    {project?.theme && <p>{project.theme}</p>}
+                    {project.partners.length > 0 && (
+                      <p>{project.partners[0]}</p>
+                    )}
                   </div>
                 </div>
                 {project.description?.map((descText, index) => (
@@ -307,7 +320,9 @@ const ProjectDetailClient = ({ project, nextProject }) => {
                 <div className="absolute top-1/2 text-gray-300 font-mono text-sm">
                   <div
                     className="flex p-2 flex-col cursor-pointer"
-                    onClick={() => handleNavigate(`/projects/${nextProject.slug}`)}
+                    onClick={() =>
+                      handleNavigate(`/projects/${nextProject.slug}`)
+                    }
                   >
                     Next project:
                     <span className="text-white">{nextProject.title}</span>
